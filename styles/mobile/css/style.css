@@ -1,0 +1,41 @@
+body {
+  font-family: "Ubuntu Beta", "Bitstream Vera Sans", DejaVu Sans, Tahoma, sans-serif;
+  color: #333;
+  background-color:#d3dae2;
+  margin-left: 0px;
+  margin-top: 5px;
+  margin-right: 0px;
+  margin-bottom: 0px;
+  padding: 0px;
+}
+
+       A:link {
+font-family: "Ubuntu Beta", "Bitstream Vera Sans", DejaVu Sans, Tahoma, sans-serif;
+color: #000000;              
+      }
+
+        A:visited {
+text-decoration: underline;
+color: #000000;
+                }
+
+        A:active {
+color: #000000;
+text-decoration: underline;
+background-color: #CCCC66
+                }
+
+        A:hover {
+text-decoration: underline;
+color: #000000;
+background-color: #CCCC66;
+                }
+
+.photo {
+float: left;
+margin: 0.5em;
+border: 1px solid #ccc;
+padding: 1em;
+font-size: 10px;
+box-shadow:2px 2px 3px rgba(0,0,0,0.2);
+}
