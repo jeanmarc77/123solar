@@ -1,0 +1,13 @@
+[Unit]
+Description=123Solar
+Requires=network.target
+After=network.target nginx.service php-fpm.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/curl http://localhost/123solar/scripts/boot123s.php
+#ExecStart=/usr/bin/curl --insecure https://localhost/123solar/scripts/boot123s.php
+#ExecStart=/usr/bin/curl --insecure --user user:password -s https://localhost/123solar/scripts/boot123s.php
+
+[Install]
+WantedBy=default.target
