@@ -1,0 +1,41 @@
+yourprotocol.php (This script is called as much as possible)
+════════════════
+
+$CMD_POOLING The command that request your com. app. You should use the ${'ADR'.$invt_num} variable as inverter adress (IP or RS-485) and ${'COMOPTION'.$invt_num} as parameter options.
+$CMD_RETURN The return string. Always initialize to allow the 'Communication Error' test
+
+$IxV, $IxA, $IxP are strings values. Voltage, Amperage and Power. (x range 4)
+$GxV, $GxA, $GxP For grid phase x values (x range 3)
+$FRQ Grid frequency
+
+$EFF Inverter efficiency
+$INVT, $BOOT Inverter temperature, booster (dc/dc) temperature
+
+$KWHT is the total counter (a Wh precision is needed)
+
+$RET should equal 'OK' only if the dataset is complete
+
+yourprotocol_startup.php (Called once a day few minutes after daily start-up)
+════════════════════════
+$CMD_INFO Command that generate a info text file
+$CMD_SYNC Command that sync inverter's time
+
+yourprotocol_check.php (Called each x minutes defined by the admin)
+══════════════════════
+$STATE Command that return inverter's status
+$ALARM Command that return inverter's 'alarms'
+$MESSAGE Command that return inverter's 'messages'
+
+$ILEAK Return the ileak value in mA
+$RISO Insulation in Mohm
+$PPEAK Return the peak power of all time in W
+$PPEAKOTD Peak power of the day
+
+$RET should equal 'OK' if all correct
+
+
+
+../config/sensor/your_sensor.php
+════════════════════════════════
+$SR irradiation sensor value W/m²
+
