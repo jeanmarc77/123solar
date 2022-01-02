@@ -1,3 +1,0 @@
-          <!-- #EndEditable -->
-</body>
-</html>
