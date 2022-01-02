@@ -23,7 +23,7 @@ $dir    = '../data/invt' . $invtnum . '/production/';
 $output = glob($dir . '*.csv');
 
 $yesterd = ((strtotime(date('Ymd')) - 86400) * 1000);
-$thisyear = date('Y');
+$thisyear = date('Y',strtotime('-1 days'));
 if (isset($output[0])) {
 	$j       = 0;
 	$day_num = 0;

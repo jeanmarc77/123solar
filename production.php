@@ -179,13 +179,13 @@ var Mychart, options = {
 			formatter: function() {
 				if (Mychart.series[0].options._levelNumber==1) {
 				s= '<b>' + Highcharts.dateFormat('%B %Y', this.x);
-				s+= ': ' + Highcharts.numberFormat(this.y,1) + ' kWh</b><br>';
+				s+= ': ' + Highcharts.numberFormat(this.y,1) + ' kWh</b>';
 				} else if (Mychart.series[0].options._levelNumber==2) {
 				s= '<b>' + Highcharts.dateFormat('%a. %d %B %Y', this.x);
-				s+= ': ' + Highcharts.numberFormat(this.y,2) + ' kWh</b><br>';
+				s+= ': ' + Highcharts.numberFormat(this.y,2) + ' kWh</b>';
 				} else {
 				s= '<b>' + Highcharts.dateFormat('%Y', this.x);
-				s+= ': ' +Highcharts.numberFormat(this.y) + ' kWh</b><br>';
+				s+= ': ' +Highcharts.numberFormat(this.y) + ' kWh</b>';
 				}
 				s += '<br>$lgEFF: ' + (this.y/(PLANT_POWER/1000)).toFixed(2)+ ' kWh/kWp';
 				s += '<br>$lgPRODTOOLTIP<br>';
