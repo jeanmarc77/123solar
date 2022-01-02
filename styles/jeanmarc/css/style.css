@@ -1,0 +1,76 @@
+body {
+  font-family: "Open Sans","lucida grande","Segoe UI",arial,verdana,"lucida sans unicode",tahoma,sans-serif;
+  color: #333;
+  background-image: url(../images/bg.gif);
+  font-size: 14px;
+  line-height: 16px;
+  margin-left: 0px;
+  margin-top: 5px;
+  margin-right: 0px;
+  margin-bottom: 0px;
+  padding: 0px;
+}
+
+       A:link {
+font-family: "Open Sans","lucida grande","Segoe UI",arial,verdana,"lucida sans unicode",tahoma,sans-serif;
+color: #000000;              
+      }
+
+        A:visited {
+text-decoration: underline;
+color: #000000;
+                }
+
+        A:active {
+color: #000000;
+text-decoration: underline;
+background-color: #CCCC66
+                }
+
+        A:hover {
+text-decoration: underline;
+color: #000000;
+background-color: #CCCC66;
+                }
+
+.cadre {  border: 1px #666633 solid}
+.cadrebot { border: solid; border-width: 0px 1px 1px 1px; border-color: #FFFFFF #666633 #666633 #666633}
+.cadretopleft { border: solid; border-width: 1px 0px 0px 1px; border-color: #666633 #FFFFFF #FFFFFF #666633}
+.cadretopright { border: solid; border-width: 1px 1px 0px 0px; border-color: #666633 #666633 #FFFFFF #FFFFFF}
+.cadretop { border: solid; border-width: 1px 0px 0px 0px; border-color: #666633 #FFFFFF #FFFFFF #FFFFFF}
+.cadrenews { border: #666633 solid; border-width: 0px 1px 1px}
+
+div.menu a {
+  text-decoration: none;
+  color: #000000;
+  }
+div.menu a:hover {
+  background-color: #EDEDA8;
+  color: #000000;
+  text-decoration: none;
+  } 
+div.menu a:active {
+  background-color: #EDEDA8;
+  color: #000000;
+  text-decoration: none;
+  }
+div.menu a:visited {
+  text-decoration: none;
+  color: #000000;
+  } 
+
+div.menu a:link {
+  text-decoration: none;
+  color: #000000;
+  } 
+
+.photo {
+background-color: #FFF;
+float: left;
+margin: 0.5em;
+border: 1px solid #ccc;
+padding: 1em;
+font-size: 10px;
+box-shadow:2px 2px 3px rgba(0,0,0,0.2);
+}
+

@@ -1,0 +1,16 @@
+Hi,
+
+If you ever want to make your own style, please read this carefully before.
+
+Make a new folder named by your style. Then create subfolders for the images and for the css.
+
+Make your own template page on two parts (header.php and footer.php). Your header.php should start at the <body> part.
+
+The links to indexes are like this : <a href="index.php"><?php echo "$lgMINDEX";?></a>
+
+
+"yourheader" is used for your personnal need (eg: Google Analytics). The "globalheader" file shouldn't be touched.
+
+Well overhall, i guess it's more talking to take a look on the examples ;)
+
+Jean-Marc

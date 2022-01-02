@@ -1,0 +1,76 @@
+body {
+  font-family: "Ubuntu Beta", "Bitstream Vera Sans", DejaVu Sans, Tahoma, sans-serif;
+  color: #333;
+  background-image: url(../images/bg.gif);
+  font-size: 12px;
+  line-height: 16px;
+  margin-left: 0px;
+  margin-top: 5px;
+  margin-right: 0px;
+  margin-bottom: 0px;
+  padding: 0px;
+}
+
+       A:link {
+font-family: "Ubuntu Beta", "Bitstream Vera Sans", DejaVu Sans, Tahoma, sans-serif;
+color: #000000;              
+      }
+
+        A:visited {
+text-decoration: underline;
+color: #000000;
+                }
+
+        A:active {
+color: #000000;
+text-decoration: underline;
+background-color: #666666
+                }
+
+        A:hover {
+text-decoration: underline;
+color: #000000;
+background-color: #666666;
+                }
+
+.cadre {  border: 1px #666633 solid}
+.cadrebotleft { border: solid; border-width: 0px 0px 1px 1px; border-color: #FFFFFF #666666 #666666}
+.cadrebotright { border: solid; border-width: 0px 1px 1px 0px; border-color: #FFFFFF #666666 #666666 #FFFFFF}
+.cadretopleft { border: solid; border-width: 1px 0px 1px 1px; border-color: #666666 #FFFFFF #666666 #666666}
+.cadretop { border: solid; border-width: 1px 0px 1px 0px; border-color: #666666 #FFFFFF #666666 #666666}
+.cadretopright { border: solid; border-width: 1px 1px 1px 0px; border-color: #666666 #666666 #666666 #FFFFFF}
+.cadrenews { border: #666666 solid; border-width: 0px 1px 1px}
+
+div.menu a {
+  text-decoration: none;
+  color: #FFFFFF;
+  }
+div.menu a:hover {
+  background-color: #666666;
+  color: #FFFFFF;
+  text-decoration: none;
+  } 
+div.menu a:active {
+  background-color: #666666;
+  color: #FFFFFF;
+  text-decoration: none;
+  }
+div.menu a:visited {
+  text-decoration: none;
+  color: #FFFFFF;
+  } 
+
+div.menu a:link {
+  text-decoration: none;
+  color: #FFFFFF;
+  } 
+
+.photo {
+float: left;
+margin: 0.5em;
+border: 1px solid #ccc;
+padding: 1em;
+font-size: 10px;
+box-shadow:2px 2px 3px rgba(0,0,0,0.2);
+}
+
