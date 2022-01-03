@@ -33,7 +33,7 @@
  Support, Update & Contact ────────────────────────────────────────────────────
  
   Check first the 'Help and debugger' section in the administration. It usually respond to most common(s) issue(s).
-  To get support, updates or contact please go to http://www.123solar.org
+  To get support, updates or contact please go to https://github.com/jeanmarc77/123solar/
   
  License & External copyrights ────────────────────────────────────────────────
 
