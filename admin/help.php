@@ -72,7 +72,7 @@ echo "
 </td></tr>
 <tr><td valign='top'><b>Checking PHP :</b><br>
 ";
-echo "PHP version:  <a href='phpinfo.php'>" . phpversion() . "</a><br>";
+echo "PHP version: <a href='phpinfo.php'>" . phpversion() . '</a><br>';
 $input = '{ "jsontest" : " <br>Json extension loaded" }';
 $val   = json_decode($input, true);
 if ($val["jsontest"] != "") {
@@ -130,7 +130,7 @@ echo "$datareturn
 <br>The peripherals are usually owned by the uucp or dialout group, check (e.g. 'ls -al /dev/ttyUSB0'), add your user to the group: (e.g. 'usermod -a -G uucp $whoami')<br><br>";
 echo "<b>Since PHP 7.4 there is hardening options</b>.";
 echo ' Current version is ' . PHP_VERSION;
-echo ". Allow to use your com. devices by setting to PrivateDevices=false in php-fpm.service. (e.g. systemctl edit --full php-fpm.service)
+echo ". Allow to use your com. devices by setting PrivateDevices=false in php-fpm.service. (e.g. 'systemctl edit --full php-fpm.service')
 <br>
 <br> After change you need to restart php and your webserver. (e.g. 'systemctl restart php-fpm' and 'systemctl restart nginx') and reboot.
 </td>

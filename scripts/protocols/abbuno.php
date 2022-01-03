@@ -140,7 +140,7 @@ else
 	$RET = 'NOK';
 	if ($DEBUG) 
 		{
-		var_dump(CMD_RETURN);
+		var_dump($CMD_RETURN);
 		}
 	$CMD_RETURN = 'Error on Modpoll';
 	}

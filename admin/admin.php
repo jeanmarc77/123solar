@@ -10,7 +10,7 @@ include 'secure.php';
 include '../config/memory.php';
 include '../scripts/version.php';
 include '../scripts/links.php';
-$url = 'https://123solar.org/latest_version.php';
+$url = 'https://raw.githubusercontent.com/jeanmarc77/123solar/main/other/latest_version.json';
 
 if (isset($_SERVER["PHP_AUTH_USER"])) {
 	$me = $_SERVER["PHP_AUTH_USER"];
@@ -210,7 +210,6 @@ if ($startstop != 'start' && $startstop != 'stop') {
 <br><br><img src='../styles/default/images/sqe.gif'><a href='admin_invt.php'>Inverter(s) configuration</a>
 <br><br><img src='../styles/default/images/sqe.gif'><a href='admin_pvo.php'>PVoutput configuration</a> <a href='http://www.pvoutput.org/listteam.jsp?tid=317' target='_blank'><img src='../images/link.png' width=16 height=16 border=0></a>
 <br><br><img src='../styles/default/images/sqe.gif'><a href='help.php'>Help and debugger</a>
-<br><br><img src='../styles/default/images/sqe.gif'><a href='https://123solar.org/phpBB/'>Forum</a>
 <br><br><span id='msg'><span>
 <br>
 <br>

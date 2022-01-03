@@ -15,6 +15,7 @@ if (!defined('checkaccess')) {
 $SDTE = date("Ymd H:i:s");
 $data = array();
 $FRQ = 0;
+$CMD_RETURN = '';
 
 include_once 'PhpSerial.php';
 

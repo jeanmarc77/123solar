@@ -13,9 +13,11 @@ if (!defined('checkaccess')) {
 // With the help of Frank Ulbrich
 
 if (!$DEBUG) {
-	$CMD_POOLING = "piko --host=${'ADR'.$invt_num} -s -p -t -i -d";
+	//$CMD_POOLING = "piko --host=${'ADR'.$invt_num} -s -p -t -i -d";
+	$CMD_POOLING = "piko --host=${'ADR'.$invt_num} --port=81 --id=1 -s -p -t -i -d";
 } else {
-	$CMD_POOLING = "piko --host=${'ADR'.$invt_num} -s -p -t -i -d";
+	///$CMD_POOLING = "piko --host=${'ADR'.$invt_num} -s -p -t -i -d";
+	$CMD_POOLING = "piko --host=${'ADR'.$invt_num} --port=81 --id=1 -s -p -t -i -d";
 }
 
 $CMD_RETURN = '';

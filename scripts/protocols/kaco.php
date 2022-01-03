@@ -34,16 +34,16 @@ if (isset($line[13])) {
 	$G2V = round($G2V, 2);
 	$G2A = (float) ($line[9] / (65535/200));
 	$G2A = round($G2A, 2);
-	$G2P = $G2V*$G2A;
+	$G2P = round(($G2V*$G2A),2);
 
 	$G3V = (float) ($line[5] / (65535/1600));
 	$G3V = round($G3V, 2);
 	$G3A = (float) ($line[10] / (65535/200));
 	$G3A = round($G3A, 2);
-	$G3P = $G3V*$G3A;
-	
-	$G1P = $G1P-$G2P-$G3P;
+	$G3P = round(($G3V*$G3A),2);
 
+	$G1P = $G1P-$G2P-$G3P;
+	
 	$FRQ = null;
 
 	// Strings
@@ -87,7 +87,7 @@ if (isset($line[13])) {
 	//print_r($line);
 
 	$KWHT = preg_replace('/[^0-9.]+/', '', $line[8]);
-	if (isset($KWHT)) {
+	if (!empty($KWHT)) {
 		/*
         echo "
         G1V: $G1V V
