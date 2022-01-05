@@ -1,5 +1,7 @@
 # 123Solar Web Logger (PHP/JS Monitoring for Solar Inverters)
- 
+
+[![123solar demo](https://i9.ytimg.com/vi/S6DIP39dG7s/mq1.jpg?sqp=CMi91I4G&rs=AOn4CLDBxLlEfBygBbBAOwmG1DX9vSJM0Q)](https://youtu.be/S6DIP39dG7s "Video Title")
+
 # What can 123Solar do for you ?
 123Solar is a set of PHP/JS files that make a web logger to monitor your photovoltaic inverter(s).
     
