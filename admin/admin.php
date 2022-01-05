@@ -10,7 +10,7 @@ include 'secure.php';
 include '../config/memory.php';
 include '../scripts/version.php';
 include '../scripts/links.php';
-$url = 'https://raw.githubusercontent.com/jeanmarc77/123solar/main/other/latest_version.json';
+$url = 'https://raw.githubusercontent.com/jeanmarc77/123solar/main/misc/latest_version.json';
 
 if (isset($_SERVER["PHP_AUTH_USER"])) {
 	$me = $_SERVER["PHP_AUTH_USER"];

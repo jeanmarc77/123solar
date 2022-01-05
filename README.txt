@@ -3,9 +3,9 @@
  ║                           - 123Solar Web Logger -                           ║
  ║                     PHP/JS Monitoring for Solar Inverters                   ║
  ║                                                                             ║
- ║             Version     : 1.8.4.3                                           ║
+ ║             Version     : 1.8.4.4                                           ║
  ║             Made by     : Louviaux Jean-Marc                                ║
- ║             Last Update : 21/08/20                                          ║
+ ║             Last Update : 05/01/21                                          ║
  ║                                                                             ║
  ╚═════════════════════════════════════════════════════════════════════════════╝
  
