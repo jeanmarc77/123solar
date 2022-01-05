@@ -116,7 +116,8 @@ if (!$error) { // download
 	$fp = fopen("$destination", 'w+');
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_URL, "$source");
-	//curl_setopt($ch, CURLOPT_BUFFERSIZE,128);
+	curl_setopt($ch, CURLOPT_BUFFERSIZE,128);
+	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 	curl_setopt($ch, CURLOPT_NOPROGRESS, false);
 	curl_setopt($ch, CURLOPT_HEADER, 0);
