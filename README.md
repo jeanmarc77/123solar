@@ -3,7 +3,7 @@
 [![123solar demo](https://i9.ytimg.com/vi_webp/S6DIP39dG7s/mqdefault.webp?v=61d52114&sqp=CKCw2o4G&rs=AOn4CLBgXZ7qdzKOmsSDGHkqFfBRdOcHHg)](https://youtu.be/S6DIP39dG7s "123solar demo")
 
 # What can 123Solar do for you ?
-123Solar is a set of PHP/JS files that make a web logger to monitor your photovoltaic inverter(s).
+123Solar is a lightweight set of PHP/JS files that make a web logger to monitor your photovoltaic inverter(s).
     
 # Prerequisites
 123Solar rely on communication(s) application(s) which are not included in this package.
