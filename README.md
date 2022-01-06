@@ -20,7 +20,7 @@ Both AC and DC power must always be disconnected. Even though, this will not be 
 - Go then in your browser for configuration http://yourIP/123solar/admin/
 
 # Support, Update & Contact
-Check first the 'Help and debugger' section in the administration. It usually respond to most common(s) issue(s).
+Check the wiki and the 'Help and debugger' section in the administration section. It usually respond to most common(s) issue(s).
   
 # License & External copyrights
 123Solar is released under the GNU GPLv3 license (General Public License).
