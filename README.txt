@@ -11,7 +11,7 @@
  
  What can 123Solar do for you ? ───────────────────────────────────────────────
 
-  123Solar is a set of PHP/JS files that make a web logger to monitor your photovoltaic inverter(s).
+  123Solar is a lightweight set of PHP/JS files that make a web logger to monitor your photovoltaic inverter(s).
     
  Prerequisites ────────────────────────────────────────────────────────────────
  
