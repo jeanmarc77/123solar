@@ -139,7 +139,7 @@ sort($output);
 $cnt=count($output);
 $j=0;
 for ($i=0;$i<$cnt;$i++) {
-	if ($output[$i]!='.' && $output[$i]!='..' && !preg_match('/\.php$/i', $output[$i]) ) {
+	if (is_dir('../styles/'.$output[$i]) && $output[$i]!='.' && $output[$i]!='..') {
 		$style[$j]=$output[$i];
 		$j++;
 	}
