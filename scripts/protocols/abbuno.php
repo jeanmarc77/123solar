@@ -11,7 +11,7 @@ if (!defined('checkaccess')) {
 
 // For TCP Modbus https://www.modbusdriver.com/modpoll.html
 
-$RET    = '';
+$RET = '';
 unset($CMD_RETURN);
 
 if (!$DEBUG) {
@@ -80,9 +80,14 @@ if ($RET != 'NOK') {
         $FRQ  = ((float) (substr($CMD_RETURN[25], 9)) / 100);
         $INVT = ((float) (substr($CMD_RETURN[42], 9)) / 10);
         $BOOT = ((float) (substr($CMD_RETURN[45], 9)) / 10);
-        $EFF  = round((100.0 * (float) (substr($CMD_RETURN[23], 9)) / (float) (substr($CMD_RETURN[40], 9))), 2);
+        if (!empty(substr($CMD_RETURN[40], 9))) {
+            $EFF = round((100.0 * (float) (substr($CMD_RETURN[23], 9)) / (float) (substr($CMD_RETURN[40], 9))), 2);
+        } else {
+            $EFF = 0;
+        }
         if ($FRQ <= 0) { // Avoid null values at early startup
-            $RET = 'NOK';
+            $RET        = 'NOK';
+            $CMD_RETURN = "Error on Modpoll: FRQ is null";
         }
     } else {
         $RET        = 'NOK';
@@ -104,7 +109,8 @@ if ($RET != 'NOK') {
     if (isset($CMD_RETURN[11])) {
         $KWHT = ((float) (substr($CMD_RETURN[11], 9)) / 100);
         if ($KWHT <= 0) { // Avoid null values due to communication error
-            $RET = 'NOK';
+            $RET        = 'NOK';
+            $CMD_RETURN = "Error on Modpoll: KWHT is null";
         }
     } else {
         $RET        = 'NOK';
@@ -113,11 +119,11 @@ if ($RET != 'NOK') {
     }
 }
 
-if ($RET != 'NOK' && !empty($RET)) {
-    $RET = 'OK';
+if ($RET != 'NOK') {
+    $RET        = 'OK';
     $CMD_RETURN = implode(',', $CMD_RETURN);
 } else {
-	$RET = 'NOK';
+    $RET = 'NOK';
     if ($DEBUG) {
         $time = date('Ymd-H:i:s');
         exec('cp /tmp/modpoll.err ' . $INVTDIR . '/errors/modpoll' . $time . '.err');
