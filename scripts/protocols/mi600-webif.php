@@ -110,7 +110,7 @@ $G1V= (float) 230; // uac fixed dummy
 $G1A = (float) round($G1P/$G1V,2);
 $FRQ= (float) 50; //freq  fixed dummy
 $KWHT= (float) $Etotal;
-if($ERR) {
+if($ERR != "0") {
     $RET = 'NOK';
 } else {
     $RET = 'OK';
