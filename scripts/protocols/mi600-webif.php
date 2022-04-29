@@ -13,7 +13,7 @@ list ($HOST, $USER, $PASSWD) = explode(" ", $OPTIONS, 3);
 $URL = "http://".$HOST."/status.html";
 
 // connect to mi600
-$connected = @fsockopen("solariumiv", 80);
+$connected = @fsockopen($HOST, 80);
 if ($connected){
     fclose($connected);
     // Decoding data
