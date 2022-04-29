@@ -1,6 +1,7 @@
 <?php
 // Experimental ! haven't been tested
 
+
 if (!defined('checkaccess')) {die('Direct access not permitted');}
 
 $CMD_RETURN = ''; // Always initialize
@@ -12,66 +13,42 @@ list ($HOST, $USER, $PASSWD) = explode(" ", $OPTIONS, 3);
 $URL = "http://".$HOST."/status.html";
 
 // connect to mi600
-exec("ping -c3 ".$HOST);
-$CURL_HANDLE = curl_init();
-curl_setopt($CURL_HANDLE, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-curl_setopt($CURL_HANDLE, CURLOPT_USERPWD, $USER. ":".$PASSWD); 
-curl_setopt($CURL_HANDLE, CURLOPT_URL, $URL );
-curl_setopt($CURL_HANDLE, CURLOPT_TIMEOUT, 15);
-curl_setopt($CURL_HANDLE, CURLOPT_RETURNTRANSFER, 1);
-$CMD_RETURN = (curl_exec($CURL_HANDLE));
-// Checking if any error occured during request
-if(curl_error($CURL_HANDLE)) {
-    $CMD_RETURN = '';
-    $DT = 0;
-    $P0count++;
-    $ERR=curl_error($CURL_HANDLE);
-} else {
+$connected = @fsockopen("solariumiv", 80);
+if ($connected){
+    fclose($connected);
     // Decoding data
-    if (preg_match("/webdata_now_p = .*/", $CMD_RETURN, $MATCHES)) {
-        $Pnow = (float)preg_replace('/[^0-9.]+/', '', $MATCHES[0]); // keep only value
+    $Pnow =(float)exec("curl -s -u ".$USER.":".$PASSWD ." ".$HOST."/status.html | grep \"webdata_now_p = \" | awk -F '\"' '{print $2}'");
+    if (!$Etotal) {
+        sleep(5);
+        $Etotal=(float)exec("curl -s -u ".$USER.":".$PASSWD ." ".$HOST."/status.html | grep \"webdata_total_e = \" | awk -F '\"' '{print $2}'");
+        file_put_contents("/var/www/html/dt.txt", $SDTE." Etotal=".$Etotal."\r\n",FILE_APPEND);
     } else {
-        $P0count++;
-        $ERR="parse error";
-    }
-    if (preg_match("/webdata_total_e = .*/", $CMD_RETURN, $MATCHES)) {
-        if (!$Etotal) {
-            $Etotal=(float)preg_replace('/[^0-9.]+/', '', $MATCHES[0]); // keep only value
-        } else {
-            if($Pnow>0) {
-                $tstamp = time();
-                if ($otstamp && !$P0count) {
-                    $DT = $tstamp - $otstamp;
-                } else {
-                    $DT = 0;
-                }
-                $otstamp = $tstamp;
-                $P0count = 0;
-                if($DT && $P) {
-                    $Etotal = $Etotal + $P*$DT*0.000000278;
-                }
-                #file_put_contents("/var/www/html/dt.txt", $SDTE." Pnow=".$Pnow." P=".$P." dt=".$DT." E=".$Etotal."\r\n", FILE_APPEND);
+        if($Pnow>0) {
+            $tstamp = time();
+            if ($otstamp && !$P0count) {
+                $DT = $tstamp - $otstamp;
             } else {
-                $P0count++;
-                #file_put_contents("/var/www/html/dt.txt", $SDTE."### P=".$P." dt=".$DT." E=".$Etotal."\r\n", FILE_APPEND);
+               $DT = 0;
+            }
+            $otstamp = $tstamp;
+            $P0count = 0;
+            if($DT && $P) {
+                $Etotal = $Etotal + $P*$DT*0.000000278;
             }
         }
-    } else {
-        $P0count++;
-        $ERR="parse error";
     }
+} else {
+    $ERR = "could not connect";
+    $Pnow = (float) 0;
+    $P0count++;
 }
-curl_close($CURL_HANDLE);
-sleep (15);
+sleep (5);
 file_put_contents("/var/www/html/dt.txt", $SDTE.": Pnow=".$Pnow." P=".$P." dt=".$DT." E=".$Etotal." Err=".$ERR."\r\n", FILE_APPEND);
 if(!$P0count) $P=$Pnow; # check if valid actual value else keep last
-if($P0count >= 4) {
+if($P0count>4) {
     $P=(float) 0; # multiple times ~60s connection to mi600 failed set P=0
     $DT=0;
-    $P0count = 4; # avoid overflow
 }
-
-
 
 
 // strings
@@ -117,7 +94,7 @@ $G1A = (float) round($G1P/$G1V,2);
 $FRQ= (float) 50; //freq  fixed dummy
 $KWHT= (float) $Etotal;
 if($ERR != "0") {
-    $RET = 'NOK';
+    $RET = 'OK';
 } else {
     $RET = 'OK';
 }
