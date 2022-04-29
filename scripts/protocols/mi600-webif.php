@@ -17,11 +17,23 @@ $connected = @fsockopen($HOST, 80);
 if ($connected){
     fclose($connected);
     // Decoding data
-    $Pnow =(float)exec("curl -s -u ".$USER.":".$PASSWD ." ".$HOST."/status.html | grep \"webdata_now_p = \" | awk -F '\"' '{print $2}'");
+    $PnowString = exec("curl -s -u ".$USER.":".$PASSWD ." ".$HOST."/status.html | grep \"webdata_now_p = \" | awk -F '\"' '{print $2}'");
+    if ($PnowString) {
+        $Pnow = (float) $PnowString;
+    } else {
+        $ERR = "could not read webdata_now_p";
+        $Pnow = (float) 0;
+        $P0count++;
+    }
     if (!$Etotal) {
         sleep(5);
-        $Etotal=(float)exec("curl -s -u ".$USER.":".$PASSWD ." ".$HOST."/status.html | grep \"webdata_total_e = \" | awk -F '\"' '{print $2}'");
-        file_put_contents("/var/www/html/dt.txt", $SDTE." Etotal=".$Etotal."\r\n",FILE_APPEND);
+        $EtotalString = exec("curl -s -u ".$USER.":".$PASSWD ." ".$HOST."/status.html | grep \"webdata_total_e = \" | awk -F '\"' '{print $2}'");
+        if ($EtotalString) {
+            $Etotal = (float) $EtotalString;
+            file_put_contents("/var/www/html/dt.txt", $SDTE." updateing local Etotal=".$Etotal."\r\n",FILE_APPEND);
+        } else {
+            $ERR = "could not read webdata_total_e";
+        }
     } else {
         if($Pnow>0) {
             $tstamp = time();
@@ -44,7 +56,7 @@ if ($connected){
 }
 sleep (5);
 file_put_contents("/var/www/html/dt.txt", $SDTE.": Pnow=".$Pnow." P=".$P." dt=".$DT." E=".$Etotal." Err=".$ERR."\r\n", FILE_APPEND);
-if(!$P0count) $P=$Pnow; # check if valid actual value else keep last
+if($P0count==0) $P=$Pnow; # check if valid actual value else keep last
 if($P0count>4) {
     $P=(float) 0; # multiple times ~60s connection to mi600 failed set P=0
     $DT=0;
