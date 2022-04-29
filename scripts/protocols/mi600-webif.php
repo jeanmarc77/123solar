@@ -12,7 +12,9 @@ list ($HOST, $USER, $PASSWD) = explode(" ", $OPTIONS, 3);
 $URL = "http://".$HOST."/status.html";
 
 // connect to mi600
+exec("ping -c3 ".$HOST);
 $CURL_HANDLE = curl_init();
+curl_setopt($CURL_HANDLE, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
 curl_setopt($CURL_HANDLE, CURLOPT_USERPWD, $USER. ":".$PASSWD); 
 curl_setopt($CURL_HANDLE, CURLOPT_URL, $URL );
 curl_setopt($CURL_HANDLE, CURLOPT_TIMEOUT, 15);
@@ -22,12 +24,14 @@ $CMD_RETURN = (curl_exec($CURL_HANDLE));
 if(curl_error($CURL_HANDLE)) {
     $CMD_RETURN = '';
     $DT = 0;
+    $P0count++;
     $ERR=curl_error($CURL_HANDLE);
 } else {
     // Decoding data
     if (preg_match("/webdata_now_p = .*/", $CMD_RETURN, $MATCHES)) {
         $Pnow = (float)preg_replace('/[^0-9.]+/', '', $MATCHES[0]); // keep only value
     } else {
+        $P0count++;
         $ERR="parse error";
     }
     if (preg_match("/webdata_total_e = .*/", $CMD_RETURN, $MATCHES)) {
@@ -53,16 +57,18 @@ if(curl_error($CURL_HANDLE)) {
             }
         }
     } else {
+        $P0count++;
         $ERR="parse error";
     }
 }
 curl_close($CURL_HANDLE);
-sleep (5);
+sleep (15);
 file_put_contents("/var/www/html/dt.txt", $SDTE.": Pnow=".$Pnow." P=".$P." dt=".$DT." E=".$Etotal." Err=".$ERR."\r\n", FILE_APPEND);
 if(!$P0count) $P=$Pnow; # check if valid actual value else keep last
-if($P0count>12) {
+if($P0count >= 4) {
     $P=(float) 0; # multiple times ~60s connection to mi600 failed set P=0
     $DT=0;
+    $P0count = 4; # avoid overflow
 }
 
 
