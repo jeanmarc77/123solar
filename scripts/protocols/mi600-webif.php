@@ -20,6 +20,10 @@ if ($connected){
     $PnowString = exec("curl -s -u ".$USER.":".$PASSWD ." ".$HOST."/status.html | grep \"webdata_now_p = \" | awk -F '\"' '{print $2}'");
     if ($PnowString) {
         $Pnow = (float) $PnowString;
+        $tstamp = time();
+        $DT = $tstamp - $otstamp;
+        $otstamp = $tstamp;
+        $P0count = 0;
     } else {
         $ERR = "could not read webdata_now_p";
         $Pnow = (float) 0;
@@ -30,36 +34,29 @@ if ($connected){
         $EtotalString = exec("curl -s -u ".$USER.":".$PASSWD ." ".$HOST."/status.html | grep \"webdata_total_e = \" | awk -F '\"' '{print $2}'");
         if ($EtotalString) {
             $Etotal = (float) $EtotalString;
-            file_put_contents("/var/www/html/dt.txt", $SDTE." updateing local Etotal=".$Etotal."\r\n",FILE_APPEND);
+            file_put_contents("/var/www/html/dt.txt", $SDTE." init local Etotal=".$Etotal."\r\n",FILE_APPEND);
         } else {
             $ERR = "could not read webdata_total_e";
         }
-    } else {
-        if($Pnow>0) {
-            $tstamp = time();
-            if ($otstamp && !$P0count) {
-                $DT = $tstamp - $otstamp;
-            } else {
-               $DT = 0;
-            }
-            $otstamp = $tstamp;
-            $P0count = 0;
-            if($DT && $P) {
-                $Etotal = $Etotal + $P*$DT*0.000000278;
-            }
-        }
     }
 } else {
-    $ERR = "could not connect";
+    $ERR = "could not connect to ".$HOST;
     $Pnow = (float) 0;
     $P0count++;
 }
-sleep (5);
-file_put_contents("/var/www/html/dt.txt", $SDTE.": Pnow=".$Pnow." P=".$P." dt=".$DT." E=".$Etotal." Err=".$ERR."\r\n", FILE_APPEND);
-if($P0count==0) $P=$Pnow; # check if valid actual value else keep last
-if($P0count>4) {
+sleep (10); # if too long the power meter won't be updateing 
+if($DT && $P) {
+    $dE=$P*$DT*0.000000278;
+    $Etotal = $Etotal + $dE;
+    file_put_contents("/var/www/html/dt.txt", "                   dE=".$dE." dt=".$DT."\r\n",FILE_APPEND);
+}
+file_put_contents("/var/www/html/dt.txt", $SDTE.": Pnow=".$Pnow." P=".$P." E=".$Etotal." Err=".$ERR."\r\n", FILE_APPEND);
+if($P0count==0) $P=(float) $Pnow; # check if valid actual value else keep last
+if($P0count>2) {
     $P=(float) 0; # multiple times ~60s connection to mi600 failed set P=0
-    $DT=0;
+    $tstamp = time();
+    $DT = $tstamp - $otstamp;
+    $otstamp = $tstamp;
 }
 
 
