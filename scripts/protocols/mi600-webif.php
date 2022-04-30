@@ -3,7 +3,7 @@
 
 
 if (!defined('checkaccess')) {die('Direct access not permitted');}
-
+$LOGFILE = "/var/www/html/123solar/data/invt1/mi600.log";
 $CMD_RETURN = ''; // Always initialize
 $MATCHES = '';
 $ERR = "0";
@@ -34,7 +34,7 @@ if ($connected){
         $EtotalString = exec("curl -s -u ".$USER.":".$PASSWD ." ".$HOST."/status.html | grep \"webdata_total_e = \" | awk -F '\"' '{print $2}'");
         if ($EtotalString) {
             $Etotal = (float) $EtotalString;
-            file_put_contents("/var/www/html/dt.txt", $SDTE." init local Etotal=".$Etotal."\r\n",FILE_APPEND);
+            if ($DEBUG) file_put_contents("$LOGFILE", $SDTE." init local Etotal=".$Etotal."\r\n",FILE_APPEND);
         } else {
             $ERR = "could not read webdata_total_e";
         }
@@ -48,9 +48,9 @@ sleep (10); # if too long the power meter won't be updateing
 if($DT && $P) {
     $dE=$P*$DT*0.000000278;
     $Etotal = $Etotal + $dE;
-    file_put_contents("/var/www/html/dt.txt", "                   dE=".$dE." dt=".$DT."\r\n",FILE_APPEND);
+    if ($DEBUG) file_put_contents("$LOGFILE", "                   dE=".$dE." dt=".$DT."\r\n",FILE_APPEND);
 }
-file_put_contents("/var/www/html/dt.txt", $SDTE.": Pnow=".$Pnow." P=".$P." E=".$Etotal." Err=".$ERR."\r\n", FILE_APPEND);
+file_put_contents("$LOGFILE", $SDTE.": Pnow=".$Pnow." P=".$P." E=".$Etotal." Err=".$ERR."\r\n", FILE_APPEND);
 if($P0count==0) $P=(float) $Pnow; # check if valid actual value else keep last
 if($P0count>2) {
     $P=(float) 0; # multiple times ~60s connection to mi600 failed set P=0
@@ -103,7 +103,7 @@ $G1A = (float) round($G1P/$G1V,2);
 $FRQ= (float) 50; //freq  fixed dummy
 $KWHT= (float) $Etotal;
 if($ERR != "0") {
-    $RET = 'OK';
+    $RET = 'OK'; #no NOK to enable automatic retry
 } else {
     $RET = 'OK';
 }
