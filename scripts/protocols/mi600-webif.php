@@ -6,6 +6,9 @@ if (!defined('checkaccess')) {die('Direct access not permitted');}
 $LOGFILE = "/var/www/html/123solar/data/invt1/mi600.log";
 $CMD_RETURN = ''; // Always initialize
 $MATCHES = '';
+if (!isset($P0count)) $P0count = 0;
+if (!isset($Etotal)) $Etotal = '';
+if (!isset($otstamp)) $otstamp= '';
 $ERR = "0";
 $SDTE = date("Ymd H:i:s");
 $OPTIONS = ${'COMOPTION'.$invt_num};
@@ -52,7 +55,7 @@ if($DT && $P) {
 }
 file_put_contents("$LOGFILE", $SDTE.": Pnow=".$Pnow." P=".$P." E=".$Etotal." Err=".$ERR."\r\n", FILE_APPEND);
 if($P0count==0) $P=(float) $Pnow; # check if valid actual value else keep last
-if($P0count>2) {
+if($P0count>5) {
     $P=(float) 0; # multiple times ~60s connection to mi600 failed set P=0
     $tstamp = time();
     $DT = $tstamp - $otstamp;
