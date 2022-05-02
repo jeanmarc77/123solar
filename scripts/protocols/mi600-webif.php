@@ -4,6 +4,7 @@
 
 if (!defined('checkaccess')) {die('Direct access not permitted');}
 $LOGFILE = "/var/www/html/123solar/data/invt1/mi600.log";
+$LASTTOTALE = "/var/www/html/123solar/data/invt1/lastEtot.dat";
 $CMD_RETURN = ''; // Always initialize
 $MATCHES = '';
 if (!isset($P0count)) $P0count = 0;
@@ -38,7 +39,11 @@ if ($connected){
         sleep(5);
         $EtotalString = exec("curl -s -u ".$USER.":".$PASSWD ." ".$HOST."/status.html | grep \"webdata_total_e = \" | awk -F '\"' '{print $2}'");
         if ($EtotalString) {
+            $EtotalLast = (float) exec("cat ".$LASTTOTALE);
             $Etotal = (float) $EtotalString;
+            if ($EtotalLast > $Etotal) { #avoid jumping Etotal 
+                $Etotal = (float) $EtotalLast;
+            }
             if ($DEBUG) file_put_contents("$LOGFILE", $SDTE." init local Etotal=".$Etotal."\r\n",FILE_APPEND);
             $DT = 0;
         } else {
@@ -57,7 +62,8 @@ if($DT && $P) {
     $Etotal = $Etotal + $dE;
     if ($DEBUG) file_put_contents("$LOGFILE", "                   dE=".$dE." dt=".$DT."\r\n",FILE_APPEND);
 }
-file_put_contents("$LOGFILE", $SDTE.": Pnow=".$Pnow." P=".$P." E=".$Etotal." Err=".$ERR."\r\n", FILE_APPEND);
+file_put_contents("$LASTTOTALE", $Etotal);
+if ($DEBUG) file_put_contents("$LOGFILE", $SDTE.": Pnow=".$Pnow." P=".$P." E=".$Etotal." Err=".$ERR."\r\n", FILE_APPEND);
 if($P0count==0) $P=(float) $Pnow; # check if valid actual value else keep last
 if($P0count>5) {
     $P=(float) 0; # multiple times ~60s connection to mi600 failed set P=0
