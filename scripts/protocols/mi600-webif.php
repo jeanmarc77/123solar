@@ -7,6 +7,8 @@ $LOGFILE = "/var/www/html/123solar/data/invt1/mi600.log";
 $CMD_RETURN = ''; // Always initialize
 $MATCHES = '';
 if (!isset($P0count)) $P0count = 0;
+if (!isset($P)) $P = 0;
+if (!isset($DT)) $DT = 0;
 if (!isset($Etotal)) $Etotal = '';
 if (!isset($otstamp)) $otstamp= '';
 $ERR = "0";
@@ -38,8 +40,10 @@ if ($connected){
         if ($EtotalString) {
             $Etotal = (float) $EtotalString;
             if ($DEBUG) file_put_contents("$LOGFILE", $SDTE." init local Etotal=".$Etotal."\r\n",FILE_APPEND);
+            $DT = 0;
         } else {
             $ERR = "could not read webdata_total_e";
+            $Etotal = '';
         }
     }
 } else {
