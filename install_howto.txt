@@ -1,0 +1,26 @@
+
+git clone https://github.com/jeanmarc77/123solar.git
+sudo mv 123solar /var/www/html/123solar
+cd /var/www/html/
+sudo chown -R www-data:www-data 123solar
+sudo usermod -a -G uucp www-data
+sudo nano /etc/apache2/sites-enabled/000-default.conf
+
+# add this to section <VirtualHost *:80>
+<Directory /var/www/html>
+# no authentificication here required
+</Directory>
+<Directory /var/www/html/123solar/admin/>
+# authentificication here required for admin
+      AuthType Basic
+      AuthName "Secure area - Authentication required"
+      AuthUserFile /etc/apache2/.htpasswd
+      Require valid-user
+</Directory>
+
+browse to //raspbian/123solar and set admin-Account-PW
+maybe also neccessary:
+sudo htpasswd -c /var/www/html/123solar/config/.htpasswd admin
+or
+sudo  htpasswd -c /etc/apache2/.htpasswd admin
+
