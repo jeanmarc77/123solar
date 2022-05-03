@@ -38,12 +38,10 @@ if ($connected){
     if (!$Etotal) {
         sleep(5);
         $EtotalString = exec("curl -s -u ".$USER.":".$PASSWD ." ".$HOST."/status.html | grep \"webdata_total_e = \" | awk -F '\"' '{print $2}'");
+        $EtotalLast = (float) exec("cat ".$LASTTOTALE);
+        $Etotal = (float) $EtotalLast;
         if ($EtotalString) {
-            $EtotalLast = (float) exec("cat ".$LASTTOTALE);
-            $Etotal = (float) $EtotalString;
-            if ($EtotalLast > $Etotal) { #avoid jumping Etotal 
-                $Etotal = (float) $EtotalLast;
-            }
+            if ((float) $EtotalString > $EtotalLast) $Etotal = (float) $EtotalString; # avoid jumping Etotal 
             if ($DEBUG) file_put_contents("$LOGFILE", $SDTE." init local Etotal=".$Etotal."\r\n",FILE_APPEND);
             $DT = 0;
         } else {
