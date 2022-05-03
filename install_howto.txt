@@ -21,4 +21,6 @@ sudo nano /etc/apache2/sites-enabled/000-default.conf
 browse to //raspbian/123solar and set admin-Account-PW
 maybe also neccessary:
 sudo htpasswd -c /var/www/html/123solar/config/.htpasswd admin
+or
+sudo  htpasswd -c /etc/apache2/.htpasswd admin
 
