@@ -30,6 +30,7 @@ if ($connected){
         $DT = $tstamp - $otstamp;
         $otstamp = $tstamp;
         $P0count = 0;
+        if ($DEBUG) file_put_contents("$LOGFILE", $SDTE.": Pnow=".$Pnow." P=".$P." E=".$Etotal." Err=".$ERR."\r\n", FILE_APPEND);
     } else {
         $ERR = "could not read webdata_now_p";
         $Pnow = (float) 0;
@@ -55,13 +56,12 @@ if ($connected){
     $P0count++;
 }
 sleep (10); # if too long the power meter won't be updateing 
-if($DT && $P) {
+if($DT && $P && ($P0count == 0) ) {
     $dE=$P*$DT*0.000000278;
     $Etotal = $Etotal + $dE;
     if ($DEBUG) file_put_contents("$LOGFILE", "                   dE=".$dE." dt=".$DT."\r\n",FILE_APPEND);
 }
 file_put_contents("$LASTTOTALE", $Etotal);
-if ($DEBUG) file_put_contents("$LOGFILE", $SDTE.": Pnow=".$Pnow." P=".$P." E=".$Etotal." Err=".$ERR."\r\n", FILE_APPEND);
 if($P0count==0) $P=(float) $Pnow; # check if valid actual value else keep last
 if($P0count>5) {
     $P=(float) 0; # multiple times ~60s connection to mi600 failed set P=0
