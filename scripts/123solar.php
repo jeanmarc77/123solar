@@ -646,10 +646,12 @@ while (true) { // To infinity ... and beyond!
 
 							for ($i = 0; $i < $cnt; $i++) {
 								$filename = $output[$i];
-								$handle   = fopen($filename, 'r');
-								$contents = fread($handle, filesize($filename));
-								$msg      = $contents . $msg;
-								fclose($handle);
+									if(filesize($filename)) {
+										$handle   = fopen($filename, 'r');
+										$contents = fread($handle, filesize($filename));
+										$msg      = $contents . $msg;
+										fclose($handle);
+									}
 							}
 							$i = 0;
 							while ($i < $cnt) {
