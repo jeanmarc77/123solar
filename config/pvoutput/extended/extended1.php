@@ -1,10 +1,10 @@
 <?php	
 if(!defined('checkaccess')){die('Direct access not permitted');}
-// ## Extended data for SYSID xxx
-$pvo_v7=round($array2[16], 1);
-$pvo_v8=round($array2[19], 1);
+// ## Extended data for SYSID1, edit to fit your need
+$pvo_v7=null;
+$pvo_v8=null;
 $pvo_v9=null;
-$pvo_v10=124;
+$pvo_v10=null;
 $pvo_v11=null;
-$pvo_v12=365;
+$pvo_v12=null;
 ?>
