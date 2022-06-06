@@ -1,6 +1,12 @@
 <?php
 // Experimental ! haven't been tested
 
+# Stand-alone protocol for Bosswerk MI600 inverter
+# Author: https://github.com/dr-ni/123solar_mi600
+# License GPL-v3+
+#
+# Please supply '<host> <user> <passwd>' for your MI600 in Admin -> Inverter(s) configuration
+# Use the field 'Communication options'
 
 if (!defined('checkaccess')) {die('Direct access not permitted');}
 $LOGFILE = "/var/www/html/123solar/data/invt1/mi600.log";
