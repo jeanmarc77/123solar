@@ -90,6 +90,9 @@ if (!extension_loaded('curl')) {
 } else {
 	echo "<img src='../images/24/sign-check.png' width=24 height=24 border=0> Curl extension loaded ";
 }
+echo "<br><br><b>Since PHP 7.4 there is hardening options</b><br>
+Allow to use your com. devices by setting PrivateDevices=false in php-fpm.service. (e.g. 'systemctl edit --full php-fpm.service')
+<br> After change you need to restart php and your webserver. (e.g. 'systemctl restart php-fpm' and 'systemctl restart nginx') and reboot.";
 $ndday = date($DATEFORMAT . " H:i:s", $nowUTC);
 echo "<br><br>You timezone is set to $DTZ ($ndday)";
 if (ini_get('open_basedir')) {
@@ -127,12 +130,7 @@ $whoami = exec('whoami');
 echo "$whoami user</b>. $whoami currently belong to those groups: ";
 $datareturn = exec("groups $whoami");
 echo "$datareturn
-<br>The peripherals are usually owned by the uucp or dialout group, check (e.g. 'ls -al /dev/ttyUSB0'), add your user to the group: (e.g. 'usermod -a -G uucp $whoami')<br><br>";
-echo "<b>Since PHP 7.4 there is hardening options</b>.";
-echo ' Current version is ' . PHP_VERSION;
-echo ". Allow to use your com. devices by setting PrivateDevices=false in php-fpm.service. (e.g. 'systemctl edit --full php-fpm.service')
-<br>
-<br> After change you need to restart php and your webserver. (e.g. 'systemctl restart php-fpm' and 'systemctl restart nginx') and reboot.
+<br>The peripherals are usually owned by the uucp or dialout group, check (e.g. 'ls -al /dev/ttyUSB0'), add your user to the group: (e.g. 'usermod -a -G uucp $whoami')<br>
 </td>
 </tr>
 <tr><td valign='top'><b>Com. app. reliability :</b> <a href='comtester.php'>Enhanced com. tester</a></td></tr>
