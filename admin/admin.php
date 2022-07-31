@@ -7,6 +7,8 @@
 
 
 include 'secure.php';
+include '../config/config_main.php';
+include '../scripts/distros/' . $DISTRO . '.php';
 include '../config/memory.php';
 include '../scripts/version.php';
 include '../scripts/links.php';
@@ -115,7 +117,7 @@ $PIDd = 'stop';
 if (file_exists('../scripts/123solar.pid')) {
 	$PIDd = date("$DATEFORMAT H:i:s", filemtime('../scripts/123solar.pid'));
 	$PID = (int) file_get_contents('../scripts/123solar.pid');
-	exec("ps -ef | grep $PID | grep 123solar.php", $ret);
+	exec("$PSCMD | grep $PID | grep 123solar.php", $ret);
 	if (!isset($ret[1])) {
 		$PID = null;
 		unlink('../scripts/123solar.pid');

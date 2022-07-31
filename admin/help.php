@@ -7,6 +7,8 @@
 
 
 include 'secure.php';
+include '../config/config_main.php';
+include '../scripts/distros/' . $DISTRO . '.php';
 include '../scripts/version.php';
 include '../config/memory.php';
 include '../config/config_invt1.php';
@@ -137,7 +139,7 @@ echo "$datareturn
 <tr><td><b>Checking running softwares :</b><br>
 <textarea style='resize: none;background-color: #DCDCDC' cols=100 rows=3>
 ";
-$datareturn = shell_exec('ps -ef | egrep -i "123solar|aurora|485solar-get|SMAspot|jfyspot|piko|rklogger|sdm120c" | grep -v grep');
+$datareturn = shell_exec("$PSCMD | egrep -i '123solar|aurora|485solar-get|SMAspot|jfyspot|piko|rklogger|sdm120c' | grep -v grep");
 echo "$datareturn
 </textarea>";
 if ($DEBUG) {

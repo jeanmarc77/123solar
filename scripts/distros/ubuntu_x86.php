@@ -7,7 +7,8 @@
 
 
 // Commands
-$UPTIME="uptime";
+$PSCMD='ps -ef';
+$UPTIME='uptime';
 $CPUUSE="ps aux|awk 'NR > 0 { s +=$3 }; END {print \"cpu %\",s}' | awk '{ print $3 }'";
 $MEMTOT="free -t -m | grep 'Total' | awk '{print $2}'";
 $MEMUSE="free -t -m | grep 'Total' | awk '{print $3}'";

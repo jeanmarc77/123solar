@@ -7,7 +7,8 @@
 
 
 // Commands
-$UPTIME="uptime";
+$PSCMD='ps -ef';
+$UPTIME='uptime';
 $CPUUSE="sar 1 1 | tail -n1 | awk '{print $3+$5}'";
 $MEMTOT="free -m | grep 'Mem' | awk '{print $2}'";
 $MEMUSE="free -m| grep 'Mem' | awk '{print $3}'";
