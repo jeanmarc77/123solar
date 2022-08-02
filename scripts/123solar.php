@@ -200,7 +200,7 @@ while (true) { // To infinity ... and beyond!
 					sleep($giveup);
 					$giveup++;
 				}
-				if ($giveup > 2 && $memarray['awake'] && $nowUTC < ($sun_info['sunset'] - 600)) {
+				if ($giveup > 2 && $memarray['awake'] && $nowUTC < ($sun_info['sunset'] - 600) && $nowUTC > ($sun_info['sunrise'] + 600)) {
 					logevents($invt_num, "#$invt_num $now\tMissing 5' sample\n\n");
 				}
 			}
