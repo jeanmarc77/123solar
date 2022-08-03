@@ -16,6 +16,9 @@ $OPTIONS = ${'COMOPTION'.$invt_num};
 list ($HOST, $USER, $PASSWD) = explode(" ", $OPTIONS, 3);
 $URL = "http://".$HOST."/status.html";
 $SRVDIR = $_SERVER['DOCUMENT_ROOT'];
+if (!$SRVDIR) {
+  $SRVDIR = "/var/www/html";
+}
 $LOGFILE = "$SRVDIR/123solar/data/invt".$invt_num."/mi600.log";
 $MI600_DATAFILE = "$SRVDIR/123solar/data/invt".$invt_num."/mi600.dat";
 $LAST_KWHTOTAL_FILE = "$SRVDIR/123solar/data/invt".$invt_num."/lastKWHtotal.dat";
