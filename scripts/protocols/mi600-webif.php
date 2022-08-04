@@ -17,7 +17,10 @@ list ($HOST, $USER, $PASSWD) = explode(" ", $OPTIONS, 3);
 $URL = "http://".$HOST."/status.html";
 $SRVDIR = $_SERVER['DOCUMENT_ROOT'];
 if (!$SRVDIR) {
-  $SRVDIR = "/var/www/html";
+  // O.K. the server variable is not set, so we try another dirty hack to get the base-path.
+  // Our script is located in directory /??/.../??/123solar/scripts/protocols. 
+  // We now go up three directories in the path and that is our base path.
+  $SRVDIR = dirname(__FILE__, 4);
 }
 $LOGFILE = "$SRVDIR/123solar/data/invt".$invt_num."/mi600.log";
 $MI600_DATAFILE = "$SRVDIR/123solar/data/invt".$invt_num."/mi600.dat";
