@@ -133,7 +133,7 @@ while (true) { // To infinity ... and beyond!
 				${'comlost' . $invt_num} = false;
 				logevents($invt_num, "#$invt_num $now\tConnection restored\n\n");
 				if (${'NORESPM' . $invt_num}) {
-					$msg = "$now\r\nConnection restored with inverter\r\n";
+					$msg = "Connection restored with inverter\r\n";
 					file_put_contents($INVTDIR . '/msgqueue/' . $nowUTC . 'LR.txt', $msg);
 				}
 			}
