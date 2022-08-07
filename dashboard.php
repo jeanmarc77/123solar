@@ -503,7 +503,7 @@ for ($j = $stri; $j < $upto; $j++) {
 	echo "V);
   gauge$j.setTitle({ text: Highcharts.numberFormat(json.G";
 	echo $ph;
-	echo "V,'1') + 'V'});
+	echo "V,'1') + 'V~'});
   $('#hz$j').html(json.FRQ + 'Hz');";
 	$j++;
 	echo "
@@ -619,7 +619,7 @@ for ($j = $stri; $j < $upto; $j++) {
 	<table width='100%' border=0 align=left cellpadding=0>
 	<tr><td><b>$lgGRID $lgDPHASE $ph : <span id='G";
 	echo $ph;
-	echo "P'>--</span> W</b>
+	echo "P'>--</span>W</b>
 	</td></tr>
 	</table>
 	<br>
@@ -649,20 +649,20 @@ echo "
 <td COLSPAN=2>
 <br>
 $lgEFF <span id='EFF'>--</span>%<br>
-$lgDBOOSTER $lgDTEMP <span id='BOOT'>--</span> °c<br>
-$lgDINVERTER $lgDTEMP <span id='INVT'>--</span> °c<br>";
+$lgDBOOSTER $lgDTEMP <span id='BOOT'>--</span>°c<br>
+$lgDINVERTER $lgDTEMP <span id='INVT'>--</span>°c<br>";
 if (${"SR$invtnum"} != 'no') {
 	echo "
-$lgSENSOR <span id='SSR'>--</span> W/m²<br>
+$lgSENSOR <span id='SSR'>--</span>W/m²<br>
 ";
 
 }
 echo "
 <br>
 <b>$lgAWCHK <span id='AWT'>--</span> :</b>
-<br><br>R.iso. <span id='RISO'>--</span> Mohm - iLeak <span id='ILEAK'>--</span> mA
+<br><br>R.iso. <span id='RISO'>--</span>Mohm - iLeak <span id='ILEAK'>--</span>mA
 <br>
-<br>$lgPPEAK <span id='PPEAK'>--</span> W, $lgPPEAKOTD <span id='PPEAKOTD'>--</span> W
+<br>$lgPPEAK <span id='PPEAK'>--</span>W, $lgPPEAKOTD <span id='PPEAKOTD'>--</span>W
 <br><span id='STATE'>--</span>
 <br><span id='STATUS'>--</span>
 <br><br>
