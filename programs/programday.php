@@ -113,7 +113,7 @@ if (isset($latestfile)) {
 							$arr['x']     = $UTCdate;
 							$arr['y']     = $MaxPow;
 							$annotations[0]['labels'][0]['point'] = $arr;
-							$annotations[0]['labels'][0]['text']  = "$MaxPow W";
+							$annotations[0]['labels'][0]['text']  = $MaxPow . 'W';
 						}
 					}
 					$line_num++;
@@ -170,7 +170,7 @@ if (isset($latestfile)) {
 		$arr['x']     = $LastTime;
 		$arr['y']     = $totAvgPOW;
 		$annotations[0]['labels'][1]['point'] = $arr;
-		$annotations[0]['labels'][1]['text']  = "$totAvgPOW W";
+		$annotations[0]['labels'][1]['text']  = $totAvgPOW . 'W';
 	}
 
 	$KWHDt = array_sum($KWHD);
