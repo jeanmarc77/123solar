@@ -15,16 +15,11 @@ $SDTE = date("Ymd H:i:s");
 $OPTIONS = ${'COMOPTION'.$invt_num};
 list ($HOST, $USER, $PASSWD) = explode(" ", $OPTIONS, 3);
 $URL = "http://".$HOST."/status.html";
-$SRVDIR = $_SERVER['DOCUMENT_ROOT'];
-if (!$SRVDIR) {
-  // O.K. the server variable is not set, so we try another dirty hack to get the base-path.
-  // Our script is located in directory /??/.../??/123solar/scripts/protocols. 
-  // We now go up three directories in the path and that is our base path.
-  $SRVDIR = dirname(__FILE__, 4);
-}
-$LOGFILE = "$SRVDIR/123solar/data/invt".$invt_num."/mi600.log";
-$MI600_DATAFILE = "$SRVDIR/123solar/data/invt".$invt_num."/mi600.dat";
-$LAST_KWHTOTAL_FILE = "$SRVDIR/123solar/data/invt".$invt_num."/lastKWHtotal.dat";
+// ##### The location of some files has changed in this patch! ####
+// ##### Please move your old lastKWHtotal.dat file manually from inverters data-directory to the errors subdirectory! 
+$LOGFILE = "$INVTDIR/errors/mi600.log";
+$MI600_DATAFILE = "$INVTDIR/errors/mi600.dat";
+$LAST_KWHTOTAL_FILE = "$INVTDIR/errors/lastKWHtotal.dat";
 // strings
 $I1V = null;
 $I1A = null;
@@ -66,6 +61,7 @@ $P = (float) 0;
 $Dt = 0;
 $MinSecondsBetweenMeasurements = 10;
 $Now = time();
+$KWHTCorrectionFactor = (float) 0; // standard behaviour, no correction needed
 
 // initializing process variables
 if (!isset($P)) $P = 0;
@@ -97,11 +93,11 @@ if ($Connected) {
       $Now = time();
       $Dt = $Now - $$LastPTS;
       $$LastPTS = $Now;
+      // If value for webdata_now_p could be read from webif it is sure that the value for webdata_total_e is also existing
+      $TotalKWHStringWebIf = exec("grep \"webdata_total_e = \"  ".$MI600_DATAFILE."| awk -F '\"' '{print $2}'");
       if (!$$LastKWHT) {
-        // If value for webdata_now_p could be read from webif it is sure that the value for webdata_total_e is also existing
-        $TotalKWHString = exec("grep \"webdata_total_e = \"  ".$MI600_DATAFILE."| awk -F '\"' '{print $2}'");
-        if ($TotalKWHString) {
-           $$LastKWHT = (float) $TotalKWHString;
+        if ($TotalKWHStringWebIf) {
+           $$LastKWHT = (float) $TotalKWHStringWebIf;
         }  
         // check if our own calculated KWHT-value is higher then the value we read from inverters webif
         // in this case we use our own stored value to avoid jumping KWHT backwards due to the missing decimal places 
@@ -110,6 +106,23 @@ if ($Connected) {
         if ($StoredTotalKWH > $$LastKWHT) {
           $$LastKWHT = $StoredTotalKWH;
         }
+      }
+      // After a few days of production we face the problem that our calculated KWHT-value shows a positive drift 
+      // compared to the (real) stored KWHT-value in the inverter. This problem results from rounding problems by
+      // the smaller number of decimal places of the value KWKT in the webif of the inverter. To solve this problem 
+      // we need a correction factor wich allows us a slightly reduce of our calculated KWHT-value over a longer 
+      // time range. So should the calculated KWHT-value gradually approach the real value stored in the inverter 
+      // over this longer time range. 
+      if (($TotalKWHStringWebIf) && ($$LastKWHT - (float) $TotalKWHStringWebIf > 0.1)) {
+        // The positive drift is bigger than 0.1, we shold calculate an correction factor.
+        // Normally we have an average of 5 measurements per minute --> 300 per hour --> 2400 for eight hours.
+        // The goal shold be that the drift is eliminated within a day. So we use 2400 as base for our correction 
+        // factor, nearly a day.
+        $KWHTDifference = $$LastKWHT - (float) $TotalKWHStringWebIf;
+        $KWHTCorrectionFactor = $KWHTDifference / 2400.0;
+        if ($DEBUG) {
+          file_put_contents("$LOGFILE", $SDTE.": KWHTDifference=".$KWHTDifference." KWHTCorrectionFactor=".$KWHTCorrectionFactor."\r\n", FILE_APPEND);
+        }  
       }
     } else {
       // sometimes the values are not filled correctly by the webif, imho a bug in the webif of the inverter
@@ -128,7 +141,12 @@ if ($Connected) {
   }  
   if ($Dt && $P) {
     // total-KWH value of this inverter has to be updated
-    $$LastKWHT += ($P * $Dt * ((1.0 / (60.0 * 60.0)) / 1000.0));
+    $NewDelta = $P * $Dt * ((1.0 / (60.0 * 60.0)) / 1000.0);
+    if (($KWHTCorrectionFactor > 0) && ($NewDelta > $KWHTCorrectionFactor)) {
+      // correction needed but the value of KWHT should always go up... 
+      $NewDelta -= $KWHTCorrectionFactor;
+    }
+    $$LastKWHT += $NewDelta;
     // save the value in case we stop the webif and restart it again later. 
     file_put_contents("$LAST_KWHTOTAL_FILE", $$LastKWHT);    
   } 
@@ -146,7 +164,7 @@ if ($DEBUG) {
        file_put_contents("$LOGFILE", $SDTE.": After ".$RetryCounter." retries data could not be read from webif, so last known power value is used!\r\n", FILE_APPEND);
     }  
   }
-  file_put_contents("$LOGFILE", $SDTE.": P=".$P." P_LAST=".$$LastP." KWHTotal=".$$LastKWHT." Err=".$ERR."\r\n", FILE_APPEND);
+  file_put_contents("$LOGFILE", $SDTE.": P=".$P." P_LAST=".$$LastP." KWHTotal=".$$LastKWHT." KWHTCorrectionFactor=".$KWHTCorrectionFactor." Err=".$ERR."\r\n", FILE_APPEND);
 }  
 
 $INVT= 0; // temperature inverter fixed dummy
