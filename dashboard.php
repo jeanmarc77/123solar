@@ -648,21 +648,21 @@ echo "
 <tr>
 <td COLSPAN=2>
 <br>
-$lgEFF <span id='EFF'>--</span>%<br>
-$lgDBOOSTER $lgDTEMP <span id='BOOT'>--</span>°c<br>
-$lgDINVERTER $lgDTEMP <span id='INVT'>--</span>°c<br>";
+$lgEFF <span id='EFF'>--</span> %<br>
+$lgDBOOSTER $lgDTEMP <span id='BOOT'>--</span> °c<br>
+$lgDINVERTER $lgDTEMP <span id='INVT'>--</span> °c<br>";
 if (${"SR$invtnum"} != 'no') {
 	echo "
-$lgSENSOR <span id='SSR'>--</span>W/m²<br>
+$lgSENSOR <span id='SSR'>--</span> W/m²<br>
 ";
 
 }
 echo "
 <br>
 <b>$lgAWCHK <span id='AWT'>--</span> :</b>
-<br><br>R.iso. <span id='RISO'>--</span>Mohm - iLeak <span id='ILEAK'>--</span>mA
+<br><br>R.iso. <span id='RISO'>--</span> Mohm - iLeak <span id='ILEAK'>--</span> mA
 <br>
-<br>$lgPPEAK <span id='PPEAK'>--</span>W, $lgPPEAKOTD <span id='PPEAKOTD'>--</span>W
+<br>$lgPPEAK <span id='PPEAK'>--</span> W, $lgPPEAKOTD <span id='PPEAKOTD'>--</span> W
 <br><span id='STATE'>--</span>
 <br><span id='STATUS'>--</span>
 <br><br>

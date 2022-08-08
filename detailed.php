@@ -379,7 +379,7 @@ formatter: function() {
   '$lgDBOOSTER $lgDTEMP': 'c',
   '$lgSENSOR': 'W/m²'
   }[this.series.name];
-return '<b>' + Highcharts.numberFormat(this.y,'1') + unit + '</b><br/>' + Highcharts.dateFormat('%H:%M', this.x)
+return '<b>' + Highcharts.numberFormat(this.y,'1') + ' ' + unit + '</b><br/>' + Highcharts.dateFormat('%H:%M', this.x)
 }
 },
 legend: {

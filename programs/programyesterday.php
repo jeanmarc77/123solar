@@ -138,7 +138,7 @@ if (isset($latestfile)) {
 	}
 
 	if ($latestfile == $ystdayUTC) {
-		$title = stripslashes("$lgYESTERDAYTITLE ($KWHDt\kWh)");
+		$title = stripslashes("$lgYESTERDAYTITLE ($KWHDt kWh)");
 	} else {
 		$dday  = date($DATEFORMAT, $latestfile);
 		$title = stripslashes("$dday ($KWHDt kWh)");

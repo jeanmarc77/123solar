@@ -159,7 +159,7 @@ tickInterval: $YINTERVALtot,
 minorTickInterval: 'auto'
 },
 tooltip: {
-formatter: function() { return '<b>' + Highcharts.numberFormat(this.y,'0') + 'W' + '</b><br/>' + Highcharts.dateFormat('%H:%M', this.x)}
+formatter: function() { return '<b>' + Highcharts.numberFormat(this.y,'0') + ' W' + '</b><br/>' + Highcharts.dateFormat('%H:%M', this.x)}
 },
 exporting: {enabled: false},
 series: []
@@ -214,7 +214,7 @@ min: 0
 },
 tooltip: {
 formatter: function() {
-return '<b>' + Highcharts.numberFormat(this.y,'0') + 'W' + '</b><br/>' + Highcharts.dateFormat('%H:%M', this.x)
+return '<b>' + Highcharts.numberFormat(this.y,'0') + ' W' + '</b><br/>' + Highcharts.dateFormat('%H:%M', this.x)
 }
 },
 exporting: {enabled: false},
@@ -277,10 +277,10 @@ echo " },
 tooltip: {
 formatter: function() {
 var point = this.point,
-s = '<b>'+Highcharts.dateFormat('%a %e %b', this.x) + ': '+ Highcharts.numberFormat((this.point.stackTotal).toFixed(1),'1') +'kWh</b><br>';
-s += '$lgEFF: ' + Highcharts.numberFormat((this.point.stackTotal/(PLANT_POWERtot/1000)).toFixed(2),'2')+ 'kWh/kWp<br>';";
+s = '<b>'+Highcharts.dateFormat('%a %e %b', this.x) + ': '+ Highcharts.numberFormat((this.point.stackTotal).toFixed(1),'1') +' kWh</b><br>';
+s += '$lgEFF: ' + Highcharts.numberFormat((this.point.stackTotal/(PLANT_POWERtot/1000)).toFixed(2),'2')+ ' kWh/kWp<br>';";
 if ($selectinvt == 0) {
-	echo "s +=  this.series.name+': '+ Highcharts.numberFormat(this.y,'1') + 'kWh ('+ Highcharts.numberFormat((this.y/(myPLANT_POWER[this.series.index+1]/1000)).toFixed(2),'2')+ 'kWh/kWp)';";
+	echo "s +=  this.series.name+': '+ Highcharts.numberFormat(this.y,'1') + ' kWh ('+ Highcharts.numberFormat((this.y/(myPLANT_POWER[this.series.index+1]/1000)).toFixed(2),'2')+ ' kWh/kWp)';";
 }
 echo "
 return s;
@@ -529,7 +529,7 @@ echo "
     name: 'power',
     data: [0],
     tooltip: {
-      valueSuffix: 'W'
+      valueSuffix: ' W'
     },
     overshoot: 5,
     dataLabels: {
@@ -601,7 +601,7 @@ if ($selectinvt == 0) {
 }
 echo "</b><div id='container1' style='height: 420px'></div></td>
 <td width='20%' rowspan=2 valign='top'><div id='container4' align='center' valign='MIDDLE'></div>
-<div align=center><font size=-1>$lgPMAX<br><b id='PMAXOTD'>--</b>W @ <b id='PMAXOTDTIME'>--</b><br></font></div>";
+<div align=center><font size=-1>$lgPMAX<br><b id='PMAXOTD'>--</b> W @ <b id='PMAXOTDTIME'>--</b><br></font></div>";
 if ($selectinvt == 0) {
 	echo "<br><table width='80%' border=1 align=center cellpadding=0 cellspacing=0>";
 	for ($i = $strto; $i <= $upto; $i++) {

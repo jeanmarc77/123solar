@@ -158,7 +158,7 @@ for ($i = 0; $i < $yearscnt; $i++) {
 		$prod_m = round(array_sum($prod_day[$year][$h]), 1);
 		$title  = "$INVNAME $lgMONTH[$h] $year: ";
 		$title .= number_format($prod_m, 1, $DPOINT, $THSEP);
-		$title .= ' kWh';
+		$title .= 'kWh';
 
 		$epochdate                      = strtotime($h . '/1/' . $year) * 1000;
 		$drilldownmonths[$year][$month] = array(

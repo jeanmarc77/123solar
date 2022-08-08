@@ -245,7 +245,7 @@ tooltip: {
 formatter: function() {
     if ((Mychart.series[0].name== this.series.name)&& (Mychart.series[0].name!=Mychart.series[1].name)){
   var s = '';
-  s += '<b>' + Highcharts.dateFormat('%A %e %b %Y',this.x) + ' :</b><br/>' + Highcharts.numberFormat(this.y,'1') + ' kWh (' + Highcharts.numberFormat((this.y/(PLANT_POWER/1000)).toFixed(2))+ ' kWh/kWp)<br/>';
+  s += '<b>' + Highcharts.dateFormat('%A %e %b %Y',this.x) + ' :</b> ' + Highcharts.numberFormat(this.y,'1') + ' kWh (' + Highcharts.numberFormat((this.y/(PLANT_POWER/1000)).toFixed(2))+ ' kWh/kWp)<br/>';
   var secondSeriesLen =  Mychart.series[1].data.length;
   var daynum = ((this.x-Mychart.series[0].data[0].x)/86400000)+1;
   if(daynum<=secondSeriesLen) {
@@ -260,7 +260,7 @@ formatter: function() {
 
   return s;
    } else {
-      return '<b>' + Highcharts.dateFormat('%A %e %b %Y',this.x) + ' :</b><br/>' + Highcharts.numberFormat(this.y,'1') + ' kWh (' + Highcharts.numberFormat((this.y/(PLANT_POWER/1000)).toFixed(2))+ ' kWh/kWp)<br/>';
+      return '<b>' + Highcharts.dateFormat('%A %e %b %Y',this.x) + ' :</b> ' + Highcharts.numberFormat(this.y,'1') + ' kWh (' + Highcharts.numberFormat((this.y/(PLANT_POWER/1000)).toFixed(2))+ ' kWh/kWp)<br/>';
    }
 },
 crosshairs: true
