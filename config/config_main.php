@@ -2,7 +2,7 @@
 if(!defined('checkaccess')){die('Direct access not permitted');}
 // ### GENERAL
 $NUMINV=1;
-$DISTRO='arch_ARM';
+$DISTRO='Linux';
 $DEBUG=false;
 
 // ### LOCALIZATION
