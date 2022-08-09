@@ -146,7 +146,7 @@ echo "
 <meter id='cpu' high=85 min=0 max=100></meter> <span id='cpuuse'>--</span>%
 <br>Memory : <span id='memtot'>--</span>MB
 <meter id='mem' min='0'></meter> <font size='-1'>(<span id='memfree'>--</span>MB free)</font>
-<br>Disk Usage : <span id='diskuse'>--</span>/<span id='diskfree'>--</span> avail.
+<br>Disk : <span id='diskuse'>--</span> used / <span id='diskfree'>--</span> available
 <br>Software : $VERSION
 </td></tr>
 <tr valign='top'><td>
