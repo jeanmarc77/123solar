@@ -1,6 +1,6 @@
 <?php
 # Stand-alone protocol for Bosswerk MI600 (Deye SUN600G3-EU-230) inverter
-# Is now also working with more than one inverter in a grid.
+# It's now also working with more than one inverter in a grid.
 # Author: https://github.com/dr-ni/123solar_mi600, adapted by SOE135
 # License GPL-v3+
 #
@@ -61,6 +61,7 @@ $P = (float) 0;
 $Dt = 0;
 $MinSecondsBetweenMeasurements = 10;
 $Now = time();
+$KWHTDifference = (float) 0; // difference between the calculated KWHT-value and the (real) KWHT-value from inverters webif
 $KWHTCorrectionFactor = (float) 0; // standard behaviour, no correction needed
 
 // initializing process variables
@@ -99,7 +100,7 @@ if ($Connected) {
         if ($TotalKWHStringWebIf) {
            $$LastKWHT = (float) $TotalKWHStringWebIf;
         }  
-        // check if our own calculated KWHT-value is higher then the value we read from inverters webif
+        // check if our own calculated KWHT-value is greater then the value we read from inverters webif
         // in this case we use our own stored value to avoid jumping KWHT backwards due to the missing decimal places 
         // of the value from the webif
         $StoredTotalKWH = (float) exec("cat ".$LAST_KWHTOTAL_FILE);
@@ -109,20 +110,13 @@ if ($Connected) {
       }
       // After a few days of production we face the problem that our calculated KWHT-value shows a positive drift 
       // compared to the (real) stored KWHT-value in the inverter. This problem results from rounding problems by
-      // the smaller number of decimal places of the value KWKT in the webif of the inverter. To solve this problem 
+      // the smaller number of decimal places of the value KWHT in the webif of the inverter. To solve this problem 
       // we need a correction factor wich allows us a slightly reduce of our calculated KWHT-value over a longer 
       // time range. So should the calculated KWHT-value gradually approach the real value stored in the inverter 
       // over this longer time range. 
       if (($TotalKWHStringWebIf) && ($$LastKWHT - (float) $TotalKWHStringWebIf > 0.1)) {
-        // The positive drift is bigger than 0.1, we shold calculate an correction factor.
-        // Normally we have an average of 5 measurements per minute --> 300 per hour --> 2400 for eight hours.
-        // The goal shold be that the drift is eliminated within a day. So we use 2400 as base for our correction 
-        // factor, nearly a day.
+        // The positive drift is greater than 0.1, we should calculate a correction factor later.
         $KWHTDifference = $$LastKWHT - (float) $TotalKWHStringWebIf;
-        $KWHTCorrectionFactor = $KWHTDifference / 2400.0;
-        if ($DEBUG) {
-          file_put_contents("$LOGFILE", $SDTE.": KWHTDifference=".$KWHTDifference." KWHTCorrectionFactor=".$KWHTCorrectionFactor."\r\n", FILE_APPEND);
-        }  
       }
     } else {
       // sometimes the values are not filled correctly by the webif, imho a bug in the webif of the inverter
@@ -140,13 +134,22 @@ if ($Connected) {
     }
   }  
   if ($Dt && $P) {
-    // total-KWH value of this inverter has to be updated
-    $NewDelta = $P * $Dt * ((1.0 / (60.0 * 60.0)) / 1000.0);
-    if (($KWHTCorrectionFactor > 0) && ($NewDelta > $KWHTCorrectionFactor)) {
-      // correction needed but the value of KWHT should always go up... 
-      $NewDelta -= $KWHTCorrectionFactor;
+    // total-KWHT value of this inverter has to be updated. 
+    $NewKWHTDelta = $P * $Dt * ((1.0 / (60.0 * 60.0)) / 1000.0);
+    if ($KWHTDifference > 0.1) {
+      // The positive drift of KWHT is greater than 0.1, we shold calculate an correction factor.
+      // Normally we have an average of 5 measurements per minute --> 300 per hour --> 3600 for twelve hours.
+      // The goal should be that the drift is eliminated within a day. So we use 3600 as base for our correction 
+      // target, nearly a day of solar-operation. On the other hand we don't want to see an intense sawtooth graph so 
+      // we limit the correction factor to a maximum of 10 percent of $NewKWHTDelta. 
+      $KWHTCorrectionTarget = $KWHTDifference / 3600.0;
+      $KWHTCorrectionFactor = $NewKWHTDelta / 10.0;
+      if ($KWHTCorrectionFactor > $KWHTCorrectionTarget) {
+        // the correction factor does not need to be so high, so we limit it
+        $KWHTCorrectionFactor = $KWHTCorrectionTarget;
+      }
     }
-    $$LastKWHT += $NewDelta;
+    $$LastKWHT += ($NewKWHTDelta - $KWHTCorrectionFactor);
     // save the value in case we stop the webif and restart it again later. 
     file_put_contents("$LAST_KWHTOTAL_FILE", $$LastKWHT);    
   } 
@@ -159,12 +162,20 @@ if ($Connected) {
 if ($DEBUG) {
   if ($RetryCounter > 0) {
     if ($RetryCounter < $MaxRetryCount) {
-       file_put_contents("$LOGFILE", $SDTE.": ".$RetryCounter." retries needed to read the data from webif!\r\n", FILE_APPEND);
+       if ($RetryCounter == 1) {
+         $RCText = "y";
+       } else {
+         $RCText = "ies";
+       }
+       file_put_contents("$LOGFILE", $SDTE.": ".$RetryCounter." retr".$RCText." needed to read the data from webif!\r\n", FILE_APPEND);
     } else {
        file_put_contents("$LOGFILE", $SDTE.": After ".$RetryCounter." retries data could not be read from webif, so last known power value is used!\r\n", FILE_APPEND);
     }  
   }
-  file_put_contents("$LOGFILE", $SDTE.": P=".$P." P_LAST=".$$LastP." KWHTotal=".$$LastKWHT." KWHTCorrectionFactor=".$KWHTCorrectionFactor." Err=".$ERR."\r\n", FILE_APPEND);
+  if ($KWHTCorrectionFactor > 0) {
+    file_put_contents("$LOGFILE", $SDTE.": Ongoing KWHT-correction, KWHTDifference=".$KWHTDifference." KWHTCorrectionFactor=".$KWHTCorrectionFactor."\r\n", FILE_APPEND);
+  }
+  file_put_contents("$LOGFILE", $SDTE.": P=".$P." P_LAST=".$$LastP." KWHTotal=".$$LastKWHT." NewKWHTDelta=".$NewKWHTDelta." Err=".$ERR."\r\n", FILE_APPEND);
 }  
 
 $INVT= 0; // temperature inverter fixed dummy
