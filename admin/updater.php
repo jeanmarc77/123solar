@@ -170,6 +170,29 @@ if (!$error) {
 	}
 }
 
+// Import user styles
+$stylist = array(
+    'default',
+    'bluepanel',
+    'jeanmarc',
+    'mobile'
+);
+
+if (!$error) {
+    $styldir = scandir("$CURDIR/styles/");
+    $cnt     = count($styldir);
+    for ($i = 0; $i < $cnt; $i++) {
+        if (is_dir("$CURDIR/styles/$styldir[$i]/") && !in_array($styldir[$i], array('.','..')) && !in_array($styldir[$i], $stylist)) {
+            if (!xcopy("$CURDIR/styles/$styldir[$i]/", "$SRVDIR/_INSTALL/123solar/styles/$styldir[$i]/", 0644)) {
+                $error = true;
+                $log .= "ERROR: Failed to import styles $styldir[$i]<br>";
+            } else {
+                $log .= "OK: Imported user style $styldir[$i]<br>";
+            }
+        }
+    }
+}
+
 if (!$error) {
 	if (file_exists("$CURDIR/scripts/123solar.pid")) {
 		$pid     = (int) file_get_contents("$CURDIR/scripts/123solar.pid");
