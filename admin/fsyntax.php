@@ -10,7 +10,7 @@
 <table width="95%" height="80%" border="0" cellspacing="0" cellpadding="0" align="center">
 <tr><td>
 <?php
-//include 'secure.php';
+include 'secure.php';
 set_time_limit(40);
 $err = null;
 
