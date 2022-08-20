@@ -14,7 +14,27 @@ include 'secure.php';
 set_time_limit(40);
 $err = null;
 
-echo "Checking files<br><br>";
+if (!empty($_POST['bntsubmit'])) {
+	$bntsubmit = $_POST['bntsubmit'];
+} else {
+	$bntsubmit = null;
+}
+
+echo "
+<form action='fsyntax.php' method='post'>
+Checking
+<select name='bntsubmit'>";
+if ($bntsubmit=='csv') {
+	echo "<option value='php'>PHP</option><option SELECTED value='csv'>CSV</option>";
+} else {
+	echo "<option SELECTED value='php'>PHP</option><option value='csv'>CSV</option>";
+}
+echo "</select> files <input type='submit' value='Test'>
+</form>
+<br>
+";
+
+if ($bntsubmit == 'php' || $bntsubmit == 'csv') {
 
 $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator('../'));
 foreach ($iterator as $file) {
@@ -23,7 +43,7 @@ foreach ($iterator as $file) {
     $path = $file->getPathname();
     $ext  = pathinfo($path, PATHINFO_EXTENSION);
     // test PHP files
-    if ($ext == 'php') {
+    if ($bntsubmit == 'php' && $ext == 'php') {
         $output     = exec("php -l $path 2>&1", $datareturn, $result);
         $datareturn = implode('<br>', $datareturn);
         if ($result) {
@@ -33,7 +53,7 @@ foreach ($iterator as $file) {
     }
     
     // test csv files
-    if ($ext == 'csv' || $ext == 'cst') {
+    if ($bntsubmit == 'csv' && $ext == 'csv') {
         $csv     = fopen($path, 'r');
         $headers = fgetcsv($csv, 0, ',');
         $cnt     = count($headers);
@@ -62,7 +82,9 @@ foreach ($iterator as $file) {
 if ($err) {
     echo "<br><img src='../images/24/sign-error.png' width=24 height=24 border=0><b>-NOT- OK</b>";
 } else {
-    echo "<br><img src='../images/24/sign-check.png' width=24 height=24 border=0>All OK";
+    echo "<br><img src='../images/24/sign-check.png' width=24 height=24 border=0>All $bntsubmit files are OK";
+}
+
 }
 ?>
 <div align=center><br><br><INPUT TYPE='button' onClick="location.href='help.php'" value='Back'></div>
