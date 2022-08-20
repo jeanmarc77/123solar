@@ -14,7 +14,7 @@
 set_time_limit(40);
 $err = null;
 
-echo "Checking files syntax<br><br>";
+echo "Checking files<br><br>";
 
 $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator('../'));
 foreach ($iterator as $file) {
