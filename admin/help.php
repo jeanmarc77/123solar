@@ -125,6 +125,8 @@ echo "<br><br>Some distros have 755 by default, some application need to write p
 </td></tr>
 <tr><td valign='top'><b>Files permissions :</b> <a href='fperms.php'>$CURDIR files should be owned by $whoami user</a>
 </td></tr>
+<tr><td valign='top'><b>Files syntax :</b> <a href='fsyntax.php'>fsyntax</a>
+</td></tr>
 <tr><td valign='top'><b>Hardware and communication apps. rights :</b><br>
 <br><b>Grant the permission to execute your com. apps.</b> Locate them with 'whereis mycomapp' and 'chmod a+x /pathto/mycomapp.py'.<br>
 <br><b>Allow the access the communication ports as ";
