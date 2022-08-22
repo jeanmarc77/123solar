@@ -6,8 +6,8 @@
 123Solar is a lightweight set of PHP/JS files that make a web logger to monitor your photovoltaic inverter(s).
     
 # Prerequisites
-123Solar rely on communication(s) application(s) which are not included in this package.
-As it is running on top of a webserver, you must grant the access to your communication(s) application(s) as well as your communication port(s) to the 'http' user.
+123Solar relies on communication(s) application(s) which are not included in this package (except the mi600-webif protocol for direct inverter access).
+As 123Solar is running on top of a webserver, you must grant the access to your communication(s) application(s) as well as your communication port(s) to the 'http' user.
 Json, Calendar and Curl extensions have to be enable in php. Your webserver must allow HTTP authentication.
   
 # Warning
