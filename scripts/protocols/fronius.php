@@ -22,7 +22,7 @@ curl_close($ch);
 $dataarray = json_decode($CMD_RETURN, TRUE);
 //  print_r($dataarray);
 
-if (json_last_error() == JSON_ERROR_NONE) {
+if (json_last_error() == JSON_ERROR_NONE && isset($dataarray['Body']['Data']['TOTAL_ENERGY']['Value'])) {
 	// Grid values
 	$G1V = $dataarray['Body']['Data']['UAC']['Value'];
 	settype($G1V, 'float');
