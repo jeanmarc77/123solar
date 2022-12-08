@@ -68,7 +68,14 @@ $KWHTCorrectionFactor = (float) 0; // standard behaviour, no correction needed
 if (!isset($P)) $P = 0;
 if (!isset($$LastP)) $$LastP = (float) 0; // last determined power value for this inverter
 if (!isset($$LastPTS)) $$LastPTS = $Now - $MinSecondsBetweenMeasurements; // last determination time for the power value of this inverter
-if (!isset($$LastKWHT)) $$LastKWHT = (float) 0;  // last KWH-total value of this inverter
+if (!isset($$LastKWHT)) {
+  $$LastKWHT = (float) 0;  // last KWH-total value of this inverter
+  // In case LastKWHT is not properly set (i.e. after an 123solar restart) we try to load the stored value from disk.
+  $StoredTotalKWH = (float) exec("cat ".$LAST_KWHTOTAL_FILE);
+  if ($StoredTotalKWH > $$LastKWHT) {
+    $$LastKWHT = $StoredTotalKWH;
+  }
+}
 
 // the first measurement should be taken immediately, the following ones at the earliest after $MinSecondsBetweenMeasurements seconds
 $SecondsElapsed = ($Now - $$LastPTS);
@@ -132,7 +139,7 @@ if ($Connected) {
         $$LastPTS = $Now;
       }
     }
-  }  
+  } 
   if ($Dt && $P) {
     // total-KWHT value of this inverter has to be updated. 
     $NewKWHTDelta = $P * $Dt * ((1.0 / (60.0 * 60.0)) / 1000.0);
