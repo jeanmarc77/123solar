@@ -225,6 +225,7 @@ annotations: []
 /// Last days prod ///
 var Mychart3, options3 = {
 chart: {
+type: 'column',
 backgroundColor: null,
 defaultSeriesType: 'column'
 },
