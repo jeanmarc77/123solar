@@ -220,11 +220,12 @@ enabled: false
 title: {
   text: '";
 if ($invtnum_f == 0 || $NUMINV == 1) {
-	$parttitle = "";
+	$parttitle = '';
 } else {
 	$parttitle = "$lgINVT$invtnum_f - ";
 }
 echo "$parttitle $lgCOMPARETITLE $lgMONTH[$whichmonth] $whichyear $lgWITH $lgMONTH[$comparemonth] $compareyear2'
+,style: {fontSize: '1em'}
 },
 subtitle: { text: '$lgCOMPARESUBTITLE' },
 xAxis: [{

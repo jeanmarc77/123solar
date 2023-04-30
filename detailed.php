@@ -5,7 +5,6 @@
  * @package default
  */
 
-
 include "styles/globalheader.php";
 include 'config/config_main.php';
 date_default_timezone_set("$DTZ");
@@ -266,12 +265,13 @@ loading: {
  labelStyle: { top: '45%' },
  style: { backgroundColor: null }
 },
-title: {
-text: ''
-},
 spaceRight:20
 },
 credits: {enabled: false},
+title: {
+text: 'loading..',
+style: {fontSize: '1em'}
+},
 subtitle: { text: '$lgDETAILSUBTITLE' },
 xAxis: {
 type: 'datetime',
