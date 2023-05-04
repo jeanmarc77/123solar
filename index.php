@@ -292,7 +292,7 @@ return s;
 },
 plotOptions: {
     series: {
-    shadow: true,
+    shadow: false,
     minPointLength: 3,
     point:{
       events: {
