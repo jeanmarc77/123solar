@@ -1,0 +1,14 @@
+[Unit]
+Description=123Solar
+Requires=network.target
+After=network.target nginx.service php-fpm.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/curl http://localhost/123solar/scripts/boot123s.php
+#ExecStart=/usr/bin/curl --insecure --user admin:password -s https://localhost/123solar/scripts/boot123s.php
+#Since version 7.4 php-fpm is hardened
+ReadWritePaths = /var/lock
+
+[Install]
+WantedBy=default.target
