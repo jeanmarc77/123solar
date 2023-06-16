@@ -15,7 +15,7 @@ ExecStopPost=/usr/bin/rm -f /srv/http/123solar/scripts/123solar.pid
 User=http
 Group=http
 Restart=always
-RestartSec=2s
+RestartSec=15s
 #Since version 7.4 php-fpm is hardened
 ReadWritePaths = /var/lock
  
