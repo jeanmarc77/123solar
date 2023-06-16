@@ -140,8 +140,7 @@ if ($startstop == 'start' || $startstop == 'stop') {
 			}
 			file_put_contents($myFile, $stringData, FILE_APPEND);
 		} else {
-			$command = 'sudo systemctl start 123solar.service';
-			$PID     = exec($command);
+			$command = exec("sudo systemctl stop 123solar.service");
 		}
 		for ($i = 1; $i <= $NUMINV; $i++) {
 			if ($DEBUG) {
