@@ -140,9 +140,8 @@ if ($startstop == 'start' || $startstop == 'stop') {
 			}
 			file_put_contents($myFile, $stringData, FILE_APPEND);
 		} else {
-			$command = 'php ../scripts/123solar.php' . ' > /dev/null 2>&1 & echo $!;';
+			$command = 'sudo systemctl start 123solar.service';
 			$PID     = exec($command);
-			file_put_contents('../scripts/123solar.pid', $PID);
 		}
 		for ($i = 1; $i <= $NUMINV; $i++) {
 			if ($DEBUG) {
@@ -160,8 +159,7 @@ if ($startstop == 'start' || $startstop == 'stop') {
 	}
 	if ($startstop == 'stop') {
 		if (!is_null($PID)) {
-			$command = exec("kill $PID > /dev/null 2>&1 &");
-			unlink('../scripts/123solar.pid');
+			$command = exec("sudo systemctl stop 123solar.service");
 			if ($DEBUG) {
 				$stringData = "#* $now\tStopping 123Solar debug ($PID)\n\n";
 				$myFile     = '../data/123solar.err';
