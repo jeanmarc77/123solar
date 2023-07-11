@@ -140,9 +140,18 @@ if ($startstop == 'start' || $startstop == 'stop') {
 			}
 			file_put_contents($myFile, $stringData, FILE_APPEND);
 		} else {
-			$command = 'php ../scripts/123solar.php' . ' > /dev/null 2>&1 & echo $!;';
-			$PID     = exec($command);
-			file_put_contents('../scripts/123solar.pid', $PID);
+			$output=null;
+			exec("sudo systemctl is-enabled 123solar.service",$output);
+			if (is_dir('/run/systemd/system') && ($output[0] == "enabled")) {
+				exec("$PSCMD | grep $PID | grep 123solar.php", $ret);
+				if (!isset($ret[1])) { // avoid several instances
+				$command = exec("sudo systemctl start 123solar.service");
+				}
+			} else {
+				$command = 'php ../scripts/123solar.php' . ' > /dev/null 2>&1 & echo $!;';
+				$PID     = exec($command);
+				file_put_contents('../scripts/123solar.pid', $PID);
+			}
 		}
 		for ($i = 1; $i <= $NUMINV; $i++) {
 			if ($DEBUG) {
@@ -160,8 +169,14 @@ if ($startstop == 'start' || $startstop == 'stop') {
 	}
 	if ($startstop == 'stop') {
 		if (!is_null($PID)) {
-			$command = exec("kill $PID > /dev/null 2>&1 &");
-			unlink('../scripts/123solar.pid');
+			$output=null;
+			exec("sudo systemctl is-enabled 123solar.service",$output);
+			if (is_dir('/run/systemd/system') && ($output[0] == "enabled")) {
+				$command = exec("sudo systemctl stop 123solar.service");
+			} else {
+				$command = exec("kill $PID > /dev/null 2>&1 &");
+				unlink('../scripts/123solar.pid');
+			}
 			if ($DEBUG) {
 				$stringData = "#* $now\tStopping 123Solar debug ($PID)\n\n";
 				$myFile     = '../data/123solar.err';

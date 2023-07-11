@@ -2,13 +2,22 @@
 Description=123Solar
 Requires=network.target
 After=network.target nginx.service php-fpm.service
-
+StartLimitIntervalSec=60
+StartLimitBurst=5
+ 
 [Service]
-Type=oneshot
-#ExecStartPre=/bin/sleep 60
-ExecStart=/usr/bin/curl http://localhost/123solar/scripts/boot123s.php
-#ExecStart=/usr/bin/curl --insecure https://localhost/123solar/scripts/boot123s.php
-#ExecStart=/usr/bin/curl --insecure --user user:password -s https://localhost/123solar/scripts/boot123s.php
-
+Type=simple
+WorkingDirectory=/srv/http/123solar/scripts/
+ExecStart=/usr/bin/php 123solar.php
+# force PIDFILE see 'man systemd.service'
+ExecStartPost=/bin/sh -c 'systemctl show -p MainPID --value 123solar.service > /srv/http/123solar/scripts/123solar.pid'
+ExecStopPost=/usr/bin/rm -f /srv/http/123solar/scripts/123solar.pid
+User=http
+Group=http
+Restart=always
+RestartSec=30s
+#Since version 7.4 php-fpm is hardened
+ReadWritePaths = /var/lock
+ 
 [Install]
 WantedBy=default.target
