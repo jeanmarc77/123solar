@@ -141,7 +141,7 @@ if ($startstop == 'start' || $startstop == 'stop') {
 			file_put_contents($myFile, $stringData, FILE_APPEND);
 		} else {
 			$output=null;
-			exec("sudo systemctl is-enabled 123solar.service",$output);
+			exec("systemctl is-enabled 123solar.service",$output);
 			if (is_dir('/run/systemd/system') && ($output[0] == "enabled")) {
 				$command = exec("sudo systemctl start 123solar.service");
 			} else {
@@ -167,7 +167,7 @@ if ($startstop == 'start' || $startstop == 'stop') {
 	if ($startstop == 'stop') {
 		if (!is_null($PID)) {
 			$output=null;
-			exec("sudo systemctl is-enabled 123solar.service",$output);
+			exec("systemctl is-enabled 123solar.service",$output);
 			if (is_dir('/run/systemd/system') && ($output[0] == "enabled")) {
 				$command = exec("sudo systemctl stop 123solar.service");
 			} else {
