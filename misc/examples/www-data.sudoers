@@ -1,0 +1,5 @@
+# This file should placed in /etc/sudoers.d/ as www-data or something else
+# Username should be edited for your needs
+www-data ALL=(root) NOPASSWD: /usr/bin/systemctl stop 123solar.service
+www-data ALL=(root) NOPASSWD: /usr/bin/systemctl start 123solar.service
+www-data ALL=(root) NOPASSWD: /usr/bin/systemctl is-enabled 123solar.service

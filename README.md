@@ -18,6 +18,7 @@ Both AC and DC power must always be disconnected. Even though, this will not be 
 - Install and test the communication application(s) for your inverter(s) and make sure it is reliable !
 - Put the archive on your web server's folder then extract. (tar -xzvf 123solar*.tar.gz)
 - Go then in your browser for configuration http://yourIP/123solar/admin/
+- If the systemd unit is used, a sudoers file is needed, like www-data.sudoers file in examples 
 
 # Support, Update & Contact
 Check the wiki and the 'Help and debugger' section in the administration section. It usually respond to most common(s) issue(s).
