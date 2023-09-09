@@ -92,7 +92,7 @@ if ($Connected) {
   while (($RetryCounter < $MaxRetryCount) && ($DataOK == 0)) {
     $Res = exec("curl -s -u ".$USER.":".$PASSWD ." ".$URL." > ".$MI600_DATAFILE);
     // decoding the data
-    $PNowString = exec("grep \"webdata_now_p = \"  ".$MI600_DATAFILE."| awk -F '\"' '{print $2}'");
+    $PNowString = exec("grep \"'webdata_now_p =' \"  ".$MI600_DATAFILE."| awk -F '\"' '{print $2}'");
     if ($PNowString) {
       // The webif of the inverter could be read successfully.
       $P = (float) $PNowString;
@@ -102,7 +102,7 @@ if ($Connected) {
       $Dt = $Now - $$LastPTS;
       $$LastPTS = $Now;
       // If value for webdata_now_p could be read from webif it is sure that the value for webdata_total_e is also existing
-      $TotalKWHStringWebIf = exec("grep \"webdata_total_e = \"  ".$MI600_DATAFILE."| awk -F '\"' '{print $2}'");
+      $TotalKWHStringWebIf = exec("grep \"'webdata_total_e =' \"  ".$MI600_DATAFILE."| awk -F '\"' '{print $2}'");
       if (!$$LastKWHT) {
         if ($TotalKWHStringWebIf) {
            $$LastKWHT = (float) $TotalKWHStringWebIf;
