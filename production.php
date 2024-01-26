@@ -131,6 +131,19 @@ var Mychart, options = {
 								text: prevPointTitle
 							});
 						}
+					},
+					render: function() {
+					    let series = this.series
+					    let sum = 0
+					    for(let i = 0; i < series.length; i++) {
+				                if(series[i].visible){
+						    for(let j = 0; j < series[i].data.length; j++) {
+					                sum += series[i].data[j].y
+            					    }
+          					}
+        				    }
+					    //this.setTitle({text: '$INVNAME ' + Highcharts.numberFormat(sum, 1) + ' kWh' });
+					    document.getElementById('sum').innerHTML = '$lgPRODTITLE $lgTOTAL: '+ parseFloat(sum).toFixed(1) + ' kWh';
 					}
 				},
             },
@@ -225,6 +238,8 @@ echo "
 <table width='100%' border=0 align=center cellpadding=0>
 <tr><td><div id='container' style='width: 95%; height: 450px'></div></td></tr>
 </table>
+<p id='sum' style='font-size: 1em; color: rgb(51, 51, 51); font-weight: bold; fill: rgb(51, 51, 51);'>
 ";
+echo "$lgPRODTITLE $lgTOTAL: 0</p>";
 include "styles/$STYLE/footer.php";
 ?>
