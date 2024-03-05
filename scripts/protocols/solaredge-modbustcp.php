@@ -60,6 +60,8 @@ INVERTER:
 // Communication options -> /your/path/to/sunspec-status --port=502 --address=1 --meter=0 192.168.11.37
 // it is the same command you tested before to get csv output
 
+// Changes
+// 2024-03-05 fix division by 0 error (efficency) if no production yet
 
 if (!defined('checkaccess')) {die('Direct access not permitted');}
 
@@ -70,6 +72,8 @@ $CMD_to_get_values_from_SE = ${'COMOPTION'.$invt_num};
 
 $CMD_RETURN = system($CMD_to_get_values_from_SE);
 
+// 2024-03-05 08:37:48,ON (MPPT),44,44,508895,399.70,1.61,751.30,0.06,13.28,0,0,0,0   small production
+// 2024-03-05 08:38:13,ON (MPPT),0,0,263264,399.20,1.60,751.30,0.00,19.99,0,0,0,0     no production yet (morning)
 
 // we switch to csv, as i can't fix json decode errors
 
@@ -101,7 +105,12 @@ if ($werte[4] > 0 || $werte[5] > 0) {
 
         $KWHT = (float) ($werte[4]/1000); // yieldtotal
         $INVT = (float) $werte[9];
-        $EFF = round(($G1P/($I1P/100)),2);
+        // fix division by 0 error
+        if ($I1P > 0) {
+            $EFF = round(($G1P/($I1P/100)),2);
+        } else {
+            $EFF = 0;
+        }
         $RET = 'OK';
 } else {
         $RET = 'NOK';
