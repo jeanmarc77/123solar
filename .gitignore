@@ -1,0 +1,6 @@
+data/*
+config/*
+scripts/123solar.pid
+scripts/modbus/*
+scripts/protocols/mi600-modbus*
+scripts/jquery-3.6.4.min.js
