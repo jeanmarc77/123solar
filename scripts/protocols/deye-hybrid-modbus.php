@@ -3,9 +3,9 @@
 # The KWHT has not enough precision so we calculate it based on mi600-webif.php.
 # License GPL-v3+
 #
-# Please supply 'Modbus Serial Device' for your inverter in Admin -> Inverter(s) configuration
+# Please supply 'Modbus Serial Device or Modbus TCP address and type (RTU or tcp)' for your inverter in Admin -> Inverter(s) configuration -> Communication options
 # Use the field 'Communication options'
-# We use mbpoll and Modbus RTU there and NOT modpoll
+# We use mbpoll and NOT modpoll
 
 if (!defined('checkaccess')) {die('Direct access not permitted');}
 $CMD_RETURN = ''; // always initialize
@@ -13,7 +13,7 @@ $MATCHES = '';
 $ERR = "0";
 $SDTE = date("Ymd H:i:s");
 $OPTIONS = ${'COMOPTION'.$invt_num};
-list ($DEV) = explode(" ", $OPTIONS, 1);
+list ($DEV, $TYPE) = explode(" ", $OPTIONS, 2);
 $LOGFILE = "$INVTDIR/errors/deyeHybridModbus.err";
 $LAST_KWHTOTAL_FILE = "$INVTDIR/errors/lastKWHtotal.dat";
 
@@ -84,9 +84,9 @@ if ($SecondsElapsed < $MinSecondsBetweenMeasurements) {
 $CMD_RETVAL = 1;
 unset($CMD_RETURN);
 if (!$DEBUG) {
-    $CMD_POOLING = "mbpoll -a 1 -b 9600 -0 -P none $DEV -1 -c 23 -r 661 2>/dev/null";
+    $CMD_POOLING = "mbpoll -a 1 -b 9600 -0 -P none $DEV -m $TYPE -1 -c 23 -r 661 2>/dev/null";
 } else {
-    $CMD_POOLING = "mbpoll -a 1 -b 9600 -0 -P none $DEV -1 -c 23 -r 661 > /tmp/modpoll.err 2>&1";
+    $CMD_POOLING = "mbpoll -a 1 -b 9600 -0 -P none $DEV -m $TYPE -1 -c 23 -r 661 > /tmp/modpoll.err 2>&1";
 }
 
 while (($RetryCounter < $MaxRetryCount) && ($CMD_RETVAL != 0)) {
@@ -133,9 +133,9 @@ if (isset($CMD_RETURN)) {
 if ($RET != 'NOK') {
     unset($CMD_RETURN);
     if (!$DEBUG) {
-        $CMD_POOLING = "mbpoll -a 1 -b 9600 -0 -P none $DEV -1 -c 12 -r 609 2>/dev/null";
+        $CMD_POOLING = "mbpoll -a 1 -b 9600 -0 -P none $DEV -m $TYPE -1 -c 12 -r 609 2>/dev/null";
     } else {
-	$CMD_POOLING = "mbpoll -a 1 -b 9600 -0 -P none $DEV -1 -c 12 -r 609 >> /tmp/modpoll.err 2>&1";
+	$CMD_POOLING = "mbpoll -a 1 -b 9600 -0 -P none $DEV -m $TYPE -1 -c 12 -r 609 >> /tmp/modpoll.err 2>&1";
     }
     $RetryCounter = 0;
     $CMD_RETVAL = 1;
@@ -202,9 +202,9 @@ if (isset($CMD_RETURN[11])) {
 if ($RET != 'NOK') {
     unset($CMD_RETURN);
     if (!$DEBUG) {
-        $CMD_POOLING = "mbpoll -a 1 -b 9600 -0 -P none $DEV -1 -c 1 -r 534 2>/dev/null";
+        $CMD_POOLING = "mbpoll -a 1 -b 9600 -0 -P none $DEV -m $TYPE -1 -c 1 -r 534 2>/dev/null";
     } else {
-        $CMD_POOLING = "$POLL -a 1 -b 9600 -0 -P none $DEV -1 -c 1 -r 534 >> /tmp/modpoll.err 2>&1";
+        $CMD_POOLING = "$POLL -a 1 -b 9600 -0 -P none $DEV -m $TYPE -1 -c 1 -r 534 >> /tmp/modpoll.err 2>&1";
     }
     $RetryCounter = 0;
     $CMD_RETVAL = 1;
