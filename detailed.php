@@ -47,7 +47,7 @@ echo "
 
 $regexp = "/[0-9]{1,2}+\/[0-9]{1,2}+\/[0-9]{4}/";
 if (!empty($_POST['date1']) && preg_match($regexp, $_POST['date1'])) {
-	$date1 = $_POST['date1'];
+	$date1 = htmlspecialchars($_POST['date1']);
 } else {
 	$date1 = (substr($lstlog, -6, 2)) . "/" . (substr($lstlog, -8, 2)) . "/" . (substr($lstlog, -12, 4));
 }
@@ -230,7 +230,7 @@ if ($checkavgpower != 'on' && $checkPROD != 'on' && $checkPERF != 'on' && $check
 	$checkavgpower = 'on';
 }
 $titledate = substr($date1, 0, 10);
-$csvdate1  = (substr($date1, 6, 4)) . (substr($date1, 3, 2)) . (substr($date1, 0, 2)) . ".csv";
+$csvdate1  = (substr($date1, 6, 4)) . (substr($date1, 3, 2)) . (substr($date1, 0, 2)) . '.csv';
 
 echo "
 <script type='text/javascript'>
