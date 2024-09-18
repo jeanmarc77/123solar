@@ -55,7 +55,7 @@ if (!empty($_POST['CORRECTFACTORx']) && is_numeric($_POST['CORRECTFACTORx'])) {
 } else {
 	$CORRECTFACTORx = 1;
 }
-if (!empty($_POST['PASSOx'])) {
+if (!empty($_POST['PASSOx']) && is_numeric($_POST['PASSOx'])) {
 	$PASSOx = $_POST['PASSOx'];
 } else {
 	$PASSOx = 0;
@@ -484,7 +484,7 @@ if ($bntsubmit == 'Test mail') {
 
 	if ($Err != true) {
 		include "../config/config_invt" . $invt_numx . ".php";
-		if (${'PROTOCOL' . $invt_numx} != $PROTOCOLx) { // Clearing options
+		if ("{${'PROTOCOL' . $invt_numx}}" != $PROTOCOLx) { // Clearing options
 			$COMOPTIONx = '';
 		}
 
