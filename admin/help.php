@@ -57,7 +57,7 @@ echo "
 <tr><td><b>tmpfs :</b><br>Make sure you only use a tmpfs, a temporary filesystem that resides in memory.
 <br>";
 $datareturn = null;
-$datareturn = exec("df -h |grep $TMPFS | grep tmpfs");
+$datareturn = exec("df -h |grep $TMPFS | grep 'tmpfs\shm'");
 if ($datareturn) {
 	echo "<img src='../images/24/sign-check.png' width=24 height=24 border=0> $TMPFS is ok ";
 } else {
