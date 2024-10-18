@@ -13,7 +13,7 @@ if (!defined('checkaccess')) {
 $CMD_RETURN = ''; // Always initialize
 
 $ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, "http://${'ADR'.$invt_num}/solar_api/v1/GetInverterRealtimeData.cgi?Scope=Device&DeviceID=1&DataCollection=CommonInverterData");
+curl_setopt($ch, CURLOPT_URL, "http://${'ADR'.$invt_num}/solar_api/v1/GetInverterRealtimeData.cgi?Scope=Device&DeviceId=1&DataCollection=CommonInverterData");
 curl_setopt($ch, CURLOPT_TIMEOUT, 5);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 $CMD_RETURN = strip_tags(curl_exec($ch));
