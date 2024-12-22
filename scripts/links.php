@@ -6,9 +6,11 @@
  */
 
 
-$JSjquery = "https://code.jquery.com/jquery-3.6.0.min.js' integrity='sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=' crossorigin='anonymous";
-$JSjqui   = "https://code.jquery.com/ui/1.13.0/jquery-ui.min.js' integrity='sha256-hlKLmzaRlE8SCJC1Kw8zoUbU8BxA+8kR3gseuKfMjxA=' crossorigin='anonymous";
-$JSjquit  = "https://code.jquery.com/ui/1.13.0/themes/south-street/jquery-ui.css";
+$JSjquery = "https://code.jquery.com/jquery-3.7.1.min.js' integrity='sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=' crossorigin='anonymous";
+$JSjqui   = "https://code.jquery.com/ui/1.14.1/jquery-ui.min.js'
+  integrity='sha256-AlTido85uXPlSyyaZNsjJXeCs07eSv3r43kyCVc8ChI='
+  crossorigin='anonymous";
+$JSjquit  = "https://code.jquery.com/ui/1.14.1/themes/south-street/jquery-ui.css";
 $HC       = "https://code.highcharts.com/highcharts.js";
 $HCmore   = "https://code.highcharts.com/highcharts-more.js";
 $HCdd     = "https://code.highcharts.com/modules/drilldown.js";
