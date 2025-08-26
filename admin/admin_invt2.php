@@ -299,7 +299,7 @@ if (!empty($_POST['bntsubmit'])) {
  * @return unknown
  */
 function testemail($adress) {
-	$Syntaxe = '#^[\w.-]+@[\w.-]+\.[a-zA-Z]{2,6}$#';
+	$Syntaxe = '#^[\w.-]+@[\w.-]+\.[a-zA-Z]{2,12}$#';
 	if (preg_match($Syntaxe, $adress) || $adress == '')
 		return true;
 	else
