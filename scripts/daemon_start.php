@@ -29,7 +29,7 @@ if ($numsma > 0) {
 
 		$i = $numsma - 1;
 		if ($DEBUG) {
-			$dir = 'tmp';
+			$dir = '../data';
 			exec("nohup 485solar-get -D -b -n $i >> $dir/sma_daemon.err 2>&1 &");
 		} else {
 			exec("nohup 485solar-get -D -n $i >/dev/null 2>&1 &");
