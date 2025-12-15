@@ -82,16 +82,23 @@ if (file_exists($stateFile)) {
     }
 }
 else {
-    if ($files = glob("$INVTDIR/csv/*.csv")) {
-	rsort($files, SORT_STRING);
-	$file = $files[0];
-	$lines = file($file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-	$lastLine = end($lines);
-	$values   = str_getcsv($lastLine);
+    $latestFile = null;
+    $latestTime = 0;
 
-	$lastTimestamp = strtotime(date('Y-m-d') . ' ' . $values[0]);
-	$totalWh       = end($values) * 1000;
+    foreach (new DirectoryIterator("$INVTDIR/csv") as $file) {
+        if ($file->isFile() && $file->getExtension() === 'csv') {
+            $mtime = $file->getMTime();
+            if ($mtime > $latestTime) {
+                $latestTime = $mtime;
+                $latestFile = $file->getPathname();
+            }
+        }
     }
+    $lines = file($latestFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    $lastLine = end($lines);
+    $values   = str_getcsv($lastLine);
+    $lastTimestamp = strtotime(date('Y-m-d') . ' ' . $values[0]);
+    $totalWh       = end($values) * 1000;
 }
 
 /* ---------- KWTH calculation ---------- */
