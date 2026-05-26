@@ -1,13 +1,11 @@
-Work in progress
+Work in progress as 26/05/26
 
+clone
 https://github.com/StefanLSA/py-sma-modbus2
 
-ajouter la clé /.ssh/id_ed25519
+You may be force to use older pymodbus version: pip install "pymodbus==3.9.2"
 
-forcer à utiliser pip install "pymodbus==3.9.2"
-
-pas besoin du systemctl disable sma.service
-
+no need to use the sma.service
 
 edit logger.py to have unformated values :
 
@@ -17,8 +15,7 @@ edit logger.py to have unformated values :
             raw_val = register.value if register.value is not None else register.text
             print(raw_val)
             
-Put this package into you webserver folder 
-/srv/http/comapps/sma-modbus/
+Put this whole package into you webserver folder : /srv/http/comapps/sma-modbus/
 then mv /home/jeanmarc/py-sma-modbus2 to /srv/http/comapps/sma-modbus/py-sma-modbus2
 chown -R http:http /srv/http/comapps/sma-modbus/
 
