@@ -1,0 +1,32 @@
+Work in progress
+
+https://github.com/StefanLSA/py-sma-modbus2
+
+ajouter la clé /.ssh/id_ed25519
+
+forcer à utiliser pip install "pymodbus==3.9.2"
+
+pas besoin du systemctl disable sma.service
+
+
+edit logger.py to have unformated values :
+
+        for register in results:
+            # print(row_format.format(register.name, register.get_formattedValue(), register.description))
+            # print( register. value)
+            raw_val = register.value if register.value is not None else register.text
+            print(raw_val)
+            
+Put this package into you webserver folder 
+/srv/http/comapps/sma-modbus/
+then mv /home/jeanmarc/py-sma-modbus2 to /srv/http/comapps/sma-modbus/py-sma-modbus2
+chown -R http:http /srv/http/comapps/sma-modbus/
+
+edit  sma_pool.php
+$SMAIP = '192.168.50.127';
+$PYTHON_VENV = "/srv/http/comapps/sma-modbus/py-sma-modbus2/run/bin/python";
+$SCRIPT_PATH = "/srv/http/comapps/sma-modbus/py-sma-modbus2/main.py";
+$modbusregisters = "/srv/http/comapps/sma-modbus/sma-modbusregisters.txt";
+
+chmod +x sma_pool.php then ln -s /srv/http/comapps/sma-modbus/sma_pool.php /usr/bin/sma_pool
+

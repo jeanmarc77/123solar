@@ -78,7 +78,8 @@ $adresslist = array(
 	'kaco',
 	'piko',
 	'solarlog',
-	'abbuno'
+	'abbuno',
+	'sma-speedwire'
 );
 
 if ($NUMINV > 1) { //multi
@@ -166,7 +167,7 @@ echo "
 <td>Plant Power <input type='number' name='PLANT_POWERx' value='${'PLANT_POWER'.$invt_num}' min=0 style='width:60px'> Wp</td>
 <td>
   <select name='PHASEx' title='Single/Three phased'>";
-if (${'PHASE' . $invt_num}) {
+if ("{${'PHASE' . $invt_num}}") {
 	echo "<option value=''>Single</option><option SELECTED value='true'>Three</option>";
 } else {
 	echo "<option SELECTED value=''>Single</option><option value='true'>Three</option>";
@@ -184,7 +185,7 @@ Pass-over value <input type='number' name='PASSOx' value='${'PASSO'.$invt_num}' 
 Sensor <select name='SRx' title='Solar radiation sensor'>";
 $dir = '../config/sensor/';
 
-if (${'SR' . $invt_num} == 'no') {
+if ("{${'SR' . $invt_num}}" == 'no') {
 	echo '<option SELECTED>';
 } else {
 	echo '<option>';
@@ -198,7 +199,7 @@ $cnt = count($output);
 for ($i = 0; $i < $cnt; $i++) {
 	$output[$i] = str_replace("$dir", '', "$output[$i]");
 	$option     = substr_replace($output[$i], "", -4);
-	if (${'SR' . $invt_num} == $option) {
+	if ("{${'SR' . $invt_num}}" == $option) {
 		echo "<option SELECTED>";
 	} else {
 		echo "<option>";
@@ -215,7 +216,7 @@ echo "
 <tr><td colspan=5><b>Protocol : </b></td></tr>
 <tr>
 <td>Port <input type='text' name='PORTx' size=10";
-if (!in_array(${'PROTOCOL' . $invt_num}, $portlist)) {
+if (!in_array("{${'PROTOCOL' . $invt_num}}", $portlist)) {
 	echo " value='' disabled";
 }
 echo " value=\"${'PORT'.$invt_num}\"></td>
@@ -231,7 +232,7 @@ for ($i = 0; $i < $cnt; $i++) {
 	$output[$i] = str_replace("$dir", '', "$output[$i]");
 	$option     = substr_replace($output[$i], "", -4);
 	if (!preg_match("/_checks/", $option) && !preg_match("/_startup/", $option)) {
-		if (${'PROTOCOL' . $invt_num} == $option) {
+		if ("{${'PROTOCOL' . $invt_num}}" == $option) {
 			echo '<option SELECTED>';
 		} else {
 			echo '<option>';
@@ -242,14 +243,14 @@ for ($i = 0; $i < $cnt; $i++) {
 echo "
 </select>
 </td><td>";
-if (${'PROTOCOL' . $invt_num} == '485solar-get' || ${'PROTOCOL' . $invt_num} == 'SBFspot') {
+if ("{${'PROTOCOL' . $invt_num}}" == '485solar-get' || "{${'PROTOCOL' . $invt_num}}" == 'SBFspot') {
 	echo 'SMA inverter num. 0-9 ';
 } else {
 	echo 'RS485 | IP adress ';
 }
 echo "
 <input type='text' name='ADRx' value='${'ADR'.$invt_num}' style='width:80px' title='RS485 adress or IP'";
-if (!in_array(${'PROTOCOL' . $invt_num}, $adresslist)) {
+if (!in_array("{${'PROTOCOL' . $invt_num}}", $adresslist)) {
 	echo " value='' disabled";
 }
 echo ">
@@ -260,7 +261,7 @@ echo ">
 Sync. inverter time daily ";
 echo "
 <select name='SYNCx' title='If available'>";
-if (${'SYNC' . $invt_num}) {
+if ("{${'SYNC' . $invt_num}}") {
 	echo "<option SELECTED value='true'>Yes</option><option value=''>No</option>";
 } else {
 	echo "<option value='true'>Yes</option><option SELECTED value=''>No</option>";
@@ -271,7 +272,7 @@ echo "
 <td>
 Log com. errors
 <select name='LOGCOMx' title='It will log communication errors in event'>";
-if (${'LOGCOM' . $invt_num}) {
+if ("{${'LOGCOM' . $invt_num}}") {
 	echo "<option SELECTED value='true'>Yes</option><option value=''>No</option>";
 } else {
 	echo "<option value='true'>Yes</option><option SELECTED value=''>No</option>";
@@ -282,7 +283,7 @@ echo "
 <td>
 Skip monitoring <select name='SKIPMONITORINGx' title='If inverter is down for maintenance'>";
 if ($NUMINV > 1) {
-	if (${'SKIPMONITORING' . $invt_num}) {
+	if ("{${'SKIPMONITORING' . $invt_num}}") {
 		echo "<option SELECTED value='true'>Yes</option><option value=''>No</option>";
 	} else {
 		echo "<option value='true'>Yes</option><option SELECTED value=''>No</option>";
@@ -365,7 +366,7 @@ minute(s)</td>
 <td>
 Receive an email
 <select name='MAILWx' title=''>";
-if (${'MAILW' . $invt_num}) {
+if ("{${'MAILW' . $invt_num}}") {
 	echo "<option SELECTED value='true'>Yes</option><option value=''>No</option>";
 } else {
 	echo "<option value='true'>Yes</option><option SELECTED value=''>No</option>";
@@ -376,7 +377,7 @@ echo "
 </tr>
 <tr><td>Check inverter alarms
 <select name='SENDALARMSx' title='If available'>";
-if (${'SENDALARMS' . $invt_num}) {
+if ("{${'SENDALARMS' . $invt_num}}") {
 	echo "<option SELECTED value='true'>Yes</option><option value=''>No</option>";
 } else {
 	echo "<option value='true'>Yes</option><option SELECTED value=''>No</option>";
@@ -386,7 +387,7 @@ echo "
 </td>
 <td>Check inverter messages
 <select name='SENDMSGSx' title='If available'>";
-if (${'SENDMSGS' . $invt_num}) {
+if ("{${'SENDMSGS' . $invt_num}}") {
 	echo "<option SELECTED value='true'>Yes</option><option value=''>No</option>";
 } else {
 	echo "<option value='true'>Yes</option><option SELECTED value=''>No</option>";
@@ -397,7 +398,7 @@ echo "
 <td>
 Warn connection lost
 <select name='NORESPMx' title='Check if the connection have been lost for more than 60 sec.'>";
-if (${'NORESPM' . $invt_num}) {
+if ("{${'NORESPM' . $invt_num}}") {
 	echo "<option SELECTED value='true'>Yes</option><option value=''>No</option>";
 } else {
 	echo "<option value='true'>Yes</option><option SELECTED value=''>No</option>";
@@ -408,7 +409,7 @@ echo "
 <td>
 Log all measures
 <select name='LOGMAWx' title='Will log all measures even if they are between tolerances, as well as all alarms/warnings messages'>";
-if (${'LOGMAW' . $invt_num}) {
+if ("{${'LOGMAW' . $invt_num}}") {
 	echo "<option SELECTED value='true'>Yes</option><option value=''>No</option>";
 } else {
 	echo "<option value='true'>Yes</option><option SELECTED value=''>No</option>";
