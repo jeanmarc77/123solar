@@ -26,8 +26,8 @@ $json_texte = $ret[0];
 
 $dataarray = json_decode($json_texte, true);
 
-if ($CMD_RETURN === null) {
-    die("Erreur JSON : " . json_last_error_msg());
+if ($CMD_RETURN === null || (!isset($dataarray[13]))) {
+   $RET = 'NOK';
 }
 
 if ($CMD_RETURN === 0) {
