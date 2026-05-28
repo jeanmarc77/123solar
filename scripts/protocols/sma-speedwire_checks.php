@@ -7,22 +7,26 @@
 
 
 if (!defined('checkaccess')) {
-	die('Direct access not permitted');
+	//die('Direct access not permitted');
 }
 
 //Command that return inverter's status
 $STATE = ''; 
 $datareturn = [];
 exec('sma_pool -alarm', $datareturn);
-if (isset($datareturn[0])) {
-$ALARM = $datareturn[0];
+if (!empty(trim($datareturn[0]))) {
+$ALARM = "A $datareturn[0]";
+} else {
+$ALARM = null;
 }
 $datareturn = [];
 exec('sma_pool -message', $datareturn);
-if (isset($datareturn[0])) {
-$MESSAGE = $datareturn[0];
-
-$datareturn = [];}
+if (!empty(trim($datareturn[0]))) {
+$MESSAGE = "M $datareturn[0]";
+} else {
+$MESSAGE = null;
+}
+$datareturn = [];
 exec('sma_pool -ileak', $datareturn);
 $ILEAK = (float)$datareturn[0];
 $datareturn = [];
