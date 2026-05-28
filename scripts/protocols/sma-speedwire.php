@@ -39,7 +39,7 @@ if ($CMD_RETURN === 0) {
 	$I2A  = round($dataarray[9],1);
 	$I2P  = round($dataarray[11],1);
 	$FRQ  = round($dataarray[7],2);
-	$EFF  = 0;
+//	$EFF  = 0;
 	$INVT = round($dataarray[8],1);
 	$BOOT = round($dataarray[13],1);
 	$KWHT = round($dataarray[0]/1000,3);
@@ -60,6 +60,7 @@ if ($CMD_RETURN === 0) {
 		$G3V = null;
 		$G3A = null;
 		$G3P = null;
+		$EFF  = ($I1P/$G1P)*100;
 	} else {
 
 	}
