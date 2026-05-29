@@ -62,7 +62,7 @@ if ($CMD_RETURN === 0 && isset($dataarray[13])) {
 		$G3A = null;
 		$G3P = null;
 		if ($I1P > 0 && $G1P > 0) {
-		$EFF  = ($G1P/$I1P)*100;
+		$EFF  = ($G1P/($I1P+$I2P))*100;
 		} else {
 		$EFF = 0;
 		}
