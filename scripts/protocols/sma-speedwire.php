@@ -28,9 +28,10 @@ $dataarray = json_decode($json_texte, true);
 
 if ($CMD_RETURN === null || (!isset($dataarray[13]))) {
    $RET = 'NOK';
+   exit;
 }
 
-if ($CMD_RETURN === 0) {
+if ($CMD_RETURN === 0 && isset($dataarray[13])) {
 	//$SDTE = $dataarray[0]; // 20150719-11:31:02
 	$I1V  = round($dataarray[2],1);
 	$I1A  = round($dataarray[1],1);
@@ -60,7 +61,11 @@ if ($CMD_RETURN === 0) {
 		$G3V = null;
 		$G3A = null;
 		$G3P = null;
+		if ($I1P > 0 && $G1P > 0) {
 		$EFF  = ($I1P/$G1P)*100;
+		} else {
+		$EFF = 0;
+		}
 	} else {
 
 	}

@@ -68,8 +68,8 @@ if ($poolret === 0 && !empty($poolarr)) {
         echo $poolarr[0];
     }
 } else {
-    header('Content-Type: application/json; charset=utf-8');
-    echo json_encode(["error" => "py", "code" => $poolret]);
+    //header('Content-Type: application/json; charset=utf-8');
+    //echo json_encode(["error" => "py", "code" => $poolret]);
     exit;
 }
 ?>
