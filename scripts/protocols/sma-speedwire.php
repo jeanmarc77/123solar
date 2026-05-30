@@ -22,7 +22,12 @@ $dataarray = array();
 $ret = array();
 
 exec($CMD_POOLING, $ret, $CMD_RETURN);
-$json_texte = $ret[0];
+if (!isset($ret[0])) {
+	$RET = 'NOK';
+	exit;
+} else {
+	$json_texte = $ret[0];
+}
 
 $dataarray = json_decode($json_texte, true);
 
