@@ -7,7 +7,7 @@ if (isset($_SERVER['REMOTE_ADDR'])) {
 //  chmod +x then ln -s /srv/http/comapps/sma-modbus/sma_pool.php /usr/bin/sma_pool
 
 $SMAIP = '192.168.50.127';
-$PYTHON_VENV = "/srv/http/comapps/sma-modbus/py-sma-modbus2/run/bin/python";
+$PYTHON_VENV = "timeout 5s /srv/http/comapps/sma-modbus/py-sma-modbus2/run/bin/python";
 $SCRIPT_PATH = "/srv/http/comapps/sma-modbus/py-sma-modbus2/main.py 2>/dev/null";
 $modbusregisters = "/srv/http/comapps/sma-modbus/sma-modbusregisters.txt";
 
@@ -53,7 +53,7 @@ $poolarr = [];
 $poolret = 0;
 exec($poolcmd, $poolarr, $poolret);
 
-if ($poolret === 0 && !empty($poolarr)) {
+if ($poolret === 0 && isset($poolarr[0])) {
     if ($action == '-live') {
         header('Content-Type: application/json; charset=utf-8');
         echo json_encode($poolarr);
@@ -69,7 +69,7 @@ if ($poolret === 0 && !empty($poolarr)) {
     }
 } else {
     //header('Content-Type: application/json; charset=utf-8');
-    //echo json_encode(["error" => "py", "code" => $poolret]);
+//	echo json_encode(["error" => "py", "code" => $poolret]);
     exit;
 }
 ?>

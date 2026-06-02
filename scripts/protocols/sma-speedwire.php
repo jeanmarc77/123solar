@@ -24,16 +24,14 @@ $ret = array();
 exec($CMD_POOLING, $ret, $CMD_RETURN);
 if (!isset($ret[0])) {
 	$RET = 'NOK';
-	exit;
+	$dataarray[13] = null;
 } else {
 	$json_texte = $ret[0];
+	$dataarray = json_decode($json_texte, true);
 }
-
-$dataarray = json_decode($json_texte, true);
 
 if ($CMD_RETURN === null || (!isset($dataarray[13]))) {
    $RET = 'NOK';
-   exit;
 }
 
 if ($CMD_RETURN === 0 && isset($dataarray[13])) {

@@ -8,7 +8,7 @@
 
 //if (!defined('checkaccess')) {die('Direct access not permitted');}
 // Daily info text file
-$CMD_INFO = "";
+//$CMD_INFO = "";
 // Daily Sync time command
-$CMD_SYNC ="";
+//$CMD_SYNC ="";
 ?>
