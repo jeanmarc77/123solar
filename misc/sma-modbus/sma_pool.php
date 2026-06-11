@@ -1,7 +1,7 @@
 #!/usr/bin/php
 <?php
 if (isset($_SERVER['REMOTE_ADDR'])) {
-    //die('Direct access not permitted');
+    die('Direct access not permitted');
 }
 
 //  chmod +x then ln -s /srv/http/comapps/sma-modbus/sma_pool.php /usr/bin/sma_pool
@@ -68,9 +68,9 @@ if ($poolret === 0 && isset($poolarr[0])) {
         echo $poolarr[0];
     }
 } else {
-    //header('Content-Type: application/json; charset=utf-8');
-//	echo json_encode(["error" => "py", "code" => $poolret]);
-    exit;
+	//header('Content-Type: application/json; charset=utf-8');
+	//echo json_encode(["error" => "py", "code" => $poolret]);
+	exit;
 }
 ?>
 
