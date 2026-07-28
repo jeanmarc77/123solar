@@ -195,16 +195,16 @@ else {
 
 	//Bituebersetzungstabelle:
 	$bit2txt = array();
-	$bit2txt[00] = "E00 DC BUS Charge Fault";
-	$bit2txt[01] = "E01 Inverter Fault (SANYO DENKI)";
-	$bit2txt[02] = "E02 Reserve";
-	$bit2txt[03] = "E03 Inverter Fault";
-	$bit2txt[04] = "E04 Battery Weak or Bad";
-	//$bit2txt[05] = "E05 Reserve";  //Fehler nicht beachten, hat keine Bedeutung!
-	$bit2txt[06] = "E06 EPO (Emergency Power Off Mode)";
-	$bit2txt[07] = "E07 DC BUS Voltage Over-Rang";
-	$bit2txt[08] = "E08 DC BUS Voltage Under-Rang";
-	$bit2txt[09] = "E09 Inverter output current Over-Rang";
+	$bit2txt[0] = "E00 DC BUS Charge Fault";
+	$bit2txt[1] = "E01 Inverter Fault (SANYO DENKI)";
+	$bit2txt[2] = "E02 Reserve";
+	$bit2txt[3] = "E03 Inverter Fault";
+	$bit2txt[4] = "E04 Battery Weak or Bad";
+	//$bit2txt[5] = "E05 Reserve";  //Fehler nicht beachten, hat keine Bedeutung!
+	$bit2txt[6] = "E06 EPO (Emergency Power Off Mode)";
+	$bit2txt[7] = "E07 DC BUS Voltage Over-Rang";
+	$bit2txt[8] = "E08 DC BUS Voltage Under-Rang";
+	$bit2txt[9] = "E09 Inverter output current Over-Rang";
 	$bit2txt[10] = "E10 Inverter temperature Over-Rang";
 	$bit2txt[11] = "E11 Inverter output power Over-Rang";
 	$bit2txt[12] = "E12 Charger Fault";
