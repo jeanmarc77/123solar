@@ -193,6 +193,29 @@ if (!$error) {
     }
 }
 
+// Import user protocols
+// Anything under scripts/protocols/ that the new release does not ship is a
+// user protocol: it would otherwise be lost, and a missing protocol is not
+// reported anywhere, since including a file that no longer exists is only a
+// PHP warning. Derived from the extracted release instead of a hardcoded
+// list, so it needs no upkeep when protocols are added or removed.
+if (!$error) {
+	$stockproto = scandir("$SRVDIR/_INSTALL/123solar/scripts/protocols/");
+	$protodir   = scandir("$CURDIR/scripts/protocols/");
+	$cnt        = count($protodir);
+	for ($i = 0; $i < $cnt; $i++) {
+		if (in_array($protodir[$i], array('.', '..')) || in_array($protodir[$i], $stockproto)) {
+			continue;
+		}
+		if (!xcopy("$CURDIR/scripts/protocols/$protodir[$i]", "$SRVDIR/_INSTALL/123solar/scripts/protocols/$protodir[$i]", 0644)) {
+			$error = true;
+			$log .= "ERROR: Failed to import protocol $protodir[$i]<br>";
+		} else {
+			$log .= "OK: Imported user protocol $protodir[$i]<br>";
+		}
+	}
+}
+
 if (!$error) {
 	if (file_exists("$CURDIR/scripts/123solar.pid")) {
 		$pid     = (int) file_get_contents("$CURDIR/scripts/123solar.pid");
