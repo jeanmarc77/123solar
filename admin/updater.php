@@ -222,6 +222,28 @@ if (!$error) { // Installing new
 	}
 }
 
+if (!$error) { // Log the update so that a later anomaly can be matched with it
+	// Written here, once the new installation is in place, so the line lands
+	// in the events of the running install; data/ was imported earlier, so
+	// the previous history is already there. logevents() is not used: it
+	// lives in scripts/loadcfg.php and builds its path from __FILE__, which
+	// no longer resolves now that the old installation has been renamed.
+	// The events are kept per inverter and info.php shows one at a time, so
+	// an update, which concerns them all, goes in each of them.
+	$now = date($DATEFORMAT . ' H:i:s');
+	for ($i = 1; $i <= $NUMINV; $i++) {
+		$eventsfile = "$CURDIR/data/invt$i/infos/events.txt";
+		if (!is_file($eventsfile)) {
+			continue;
+		}
+		if (file_put_contents($eventsfile, "$now\tUpdated to 123Solar $lastv\n\n" . @file_get_contents($eventsfile)) === false) {
+			$log .= "ERROR: Failed to log the update in the events of invt$i<br>";
+		} else {
+			$log .= "OK: Logged the update in the events of invt$i<br>";
+		}
+	}
+}
+
 if (file_exists($destination)) {
 	if (!unlink("$destination")) {
 		$log .= "ERROR: Can't remove $destination<br>";
