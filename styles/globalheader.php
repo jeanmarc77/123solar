@@ -35,7 +35,15 @@ echo "
 <script type='text/javascript' src='$HCdd'></script>
 <script type='text/javascript' src='$HCexp'></script>
 <script type='text/javascript' src='$HCann'></script>
-<link rel='stylesheet' href='styles/$STYLE/css/style.css' type='text/css'>
+";
+// Optional per-style <head> additions: a viewport meta tag, web fonts, a
+// CSS framework... Included before the style's own sheet, so that the
+// style keeps the last word on anything loaded here. A style that does
+// not ship this file is unaffected.
+if (is_file("styles/$STYLE/head.php")) {
+	include "styles/$STYLE/head.php";
+}
+echo "<link rel='stylesheet' href='styles/$STYLE/css/style.css' type='text/css'>
 ";
 include 'styles/yourheader.php';
 echo '</head>';

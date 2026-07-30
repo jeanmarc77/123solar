@@ -11,6 +11,8 @@ The links to indexes are like this : <a href="index.php"><?php echo "$lgMINDEX";
 
 "yourheader" is used for your personnal need (eg: Google Analytics). The "globalheader" file shouldn't be touched.
 
+You may also add an optional "head.php" to your style folder. Whatever it prints goes inside <head>, just before your own style.css is loaded, so your style.css can still override it. It is the place for a viewport meta tag if your style is responsive, for web fonts, or for a CSS framework. Styles without that file work exactly as before.
+
 Well overhall, i guess it's more talking to take a look on the examples ;)
 
 Jean-Marc
