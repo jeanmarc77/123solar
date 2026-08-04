@@ -61,12 +61,17 @@ foreach ($iterator as $file) {
             $err = true;
             echo "<br><b>$path<b>: is corrupted<br>";
         } else {
-            $rows       = array();
             $row_number = 0;
             while ($csv_row = fgetcsv($csv, 0, ',')) {
                 $row_number++;
-                $encoded_row = array_map('utf8_encode', $csv_row);
-                if (count($encoded_row) != $cnt) {
+                // utf8_encode() used to run over $csv_row here before this
+                // count check, but array_map() never changes an array's
+                // length - it had no effect on the check below, and its
+                // result was not used anywhere else. Dropped rather than
+                // replaced: utf8_encode()/utf8_decode() are deprecated as
+                // of PHP 8.2, and there is nothing left for a replacement
+                // to do.
+                if (count($csv_row) != $cnt) {
                     $err = true;
                     echo "<br><b>$path</b>: length of row $row_number does not match the header length ($cnt)<br>";
                 }
