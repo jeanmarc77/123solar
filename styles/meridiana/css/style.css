@@ -1,0 +1,416 @@
+/**
+ * styles/meridiana/css/style.css
+ *
+ * "Meridiana" theme - 123solar side (see the meterN repo for the sibling
+ * implementation and the shared design rationale). A responsive,
+ * light/dark alternative to the default style, built on Bootstrap 5 and
+ * Font Awesome. Selected via [data-theme] on <body> (see header.php);
+ * page markup is still whatever 123solar generates, everything here is
+ * modernized via CSS alone - no engine file is touched by this theme.
+ *
+ * The @import below (must stay first, only @charset may precede an
+ * @import) is deliberate: globalheader.php (untouched upstream file)
+ * links this stylesheet BEFORE including styles/yourheader.php, so
+ * anything linked from yourheader.php would load AFTER this file and win
+ * specificity ties against it. Importing Bootstrap/Font Awesome here
+ * instead guarantees they load first in the cascade. Confirmed live:
+ * without this, Bootstrap's reboot.css was overriding the plain-table and
+ * link styling on index.php's per-inverter power list.
+ *
+ * See README.md in this directory for install/usage.
+ */
+
+@import url("https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css");
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css");
+
+:root,
+[data-theme="light"] {
+  --bg: #f2f5f9;
+  --surface: #ffffff;
+  --surface-alt: #f7f9fc;
+  --border: #e3e8ef;
+  --text: #161b26;
+  --text-muted: #667085;
+  --primary: #f59e0b;
+  --primary-ink: #7a4a04;
+  --primary-contrast: #1a1300;
+  --accent-1: #16a34a;
+  --accent-2: #2563eb;
+  --accent-3: #0891b2;
+  --accent-4: #7c3aed;
+  --accent-5: #ea580c;
+  --shadow: 0 1px 2px rgba(16, 24, 40, .06), 0 6px 20px rgba(16, 24, 40, .07);
+  --radius: 14px;
+  --nav-bg: #101827;
+  --nav-text: #e7ebf3;
+  --nav-text-muted: #93a0b8;
+  --nav-active: #f8b83c;
+  --nav-border: rgba(255, 255, 255, .08);
+}
+
+[data-theme="dark"] {
+  --bg: #0a0f1a;
+  --surface: #121a29;
+  --surface-alt: #172136;
+  --border: #253048;
+  --text: #e7ebf3;
+  --text-muted: #94a1b8;
+  --primary: #fbbf24;
+  --primary-ink: #2a1c00;
+  --primary-contrast: #1a1300;
+  --accent-1: #34d399;
+  --accent-2: #60a5fa;
+  --accent-3: #22d3ee;
+  --accent-4: #a78bfa;
+  --accent-5: #fb923c;
+  --shadow: 0 1px 2px rgba(0, 0, 0, .5), 0 10px 28px rgba(0, 0, 0, .55);
+  --nav-bg: #070b14;
+  --nav-text: #e7ebf3;
+  --nav-text-muted: #7c8aa5;
+  --nav-active: #fbbf24;
+  --nav-border: rgba(255, 255, 255, .06);
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Open Sans", Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  transition: background-color .15s ease, color .15s ease;
+}
+
+a { color: var(--accent-2); text-decoration: none; }
+a:hover { text-decoration: underline; }
+img { max-width: 100%; }
+
+/* ---------- Header / navbar ---------- */
+
+.meridiana-header {
+  background: var(--nav-bg);
+  border-bottom: 1px solid var(--nav-border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.meridiana-header-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-height: 64px;
+  flex-wrap: wrap;
+}
+
+.meridiana-brand {
+  display: flex;
+  align-items: center;
+  gap: .65rem;
+  color: var(--nav-text) !important;
+  text-decoration: none !important;
+  margin-right: auto;
+}
+
+.meridiana-brand-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--primary), var(--accent-5));
+  color: var(--primary-contrast);
+  font-size: 1.1rem;
+}
+
+.meridiana-brand-text { display: flex; flex-direction: column; line-height: 1.15; }
+.meridiana-brand-text strong { font-size: 1.05rem; font-weight: 700; }
+.meridiana-brand-text small { color: var(--nav-text-muted); font-size: .72rem; }
+
+.meridiana-nav {
+  display: flex;
+  align-items: center;
+  gap: .25rem;
+  flex-wrap: wrap;
+}
+
+.meridiana-nav a {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  color: var(--nav-text-muted) !important;
+  text-decoration: none !important;
+  padding: .5rem .75rem;
+  border-radius: 8px;
+  font-size: .88rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.meridiana-nav a:hover { color: var(--nav-text) !important; background: rgba(255, 255, 255, .06); }
+.meridiana-nav a.active { color: var(--nav-active) !important; background: rgba(248, 184, 60, .12); }
+.meridiana-nav a.meridiana-nav-admin { opacity: .7; font-weight: 500; }
+.meridiana-nav a.meridiana-nav-metern { opacity: .9; }
+
+/* Inverter picker: replaces one nav link per inverter (which does not
+   scale past 3-4 units) with a single compact dropdown, "Tutti" (all,
+   the aggregate view) plus one entry per inverter with its real name -
+   more informative than a generic "Conv. N" and consistent with the
+   names already used in the per-inverter power list. */
+
+.meridiana-invt-select {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  padding: .5rem .75rem;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, .06);
+  color: var(--nav-text-muted);
+  font-size: .88rem;
+}
+
+.meridiana-invt-select select {
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  border: none;
+  color: var(--nav-text);
+  font: inherit;
+  font-weight: 600;
+  padding-right: 1.1rem;
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.meridiana-invt-select select:focus-visible { outline: 2px solid var(--nav-active); outline-offset: 2px; }
+
+/* The dropdown popup is rendered by the OS/browser, outside our dark
+   navbar: force a readable dark-on-light pair for the options so it
+   never inherits our light-on-dark colors and ends up unreadable. */
+.meridiana-invt-select select option {
+  color: #161b26;
+  background: #ffffff;
+}
+
+.meridiana-invt-select-arrow {
+  position: absolute;
+  right: .55rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: .65rem;
+  pointer-events: none;
+  color: var(--nav-text-muted);
+}
+
+.meridiana-theme-toggle,
+.meridiana-nav-toggle {
+  background: rgba(255, 255, 255, .06);
+  border: 1px solid var(--nav-border);
+  color: var(--nav-text);
+  width: 38px;
+  height: 38px;
+  border-radius: 9px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: .95rem;
+}
+
+.meridiana-theme-toggle:hover, .meridiana-nav-toggle:hover { background: rgba(255, 255, 255, .12); }
+
+.meridiana-theme-toggle .fa-moon { display: none; }
+[data-theme="dark"] .meridiana-theme-toggle .fa-sun { display: none; }
+[data-theme="dark"] .meridiana-theme-toggle .fa-moon { display: inline; }
+
+.meridiana-nav-toggle { display: none; }
+
+/* ---------- Main content ---------- */
+
+.meridiana-main {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 3rem;
+}
+
+/* ---------- Generic tables (detailed/production/comparison/info) ---------- */
+
+.meridiana-main table {
+  border-collapse: collapse;
+  background: var(--surface);
+  color: var(--text);
+}
+
+.meridiana-main table[border] { border: 1px solid var(--border) !important; }
+
+.meridiana-main table[border] td,
+.meridiana-main table[border] th {
+  border: 1px solid var(--border) !important;
+  padding: .5rem .65rem;
+}
+
+.meridiana-main table[bgcolor] { background: var(--surface) !important; }
+.meridiana-main tr[bgcolor] { background: var(--surface-alt) !important; }
+.meridiana-main table tr:hover td { background: var(--surface-alt); }
+
+/* ---------- index.php layout: a single sidebar (gauge + per-inverter
+   power list) beside ALL THREE charts (today, yesterday, last 30 days)
+   stacked in one column - not the two-<table>s-in-a-row markup index.php
+   actually emits (row 1: today + gauge; row 2: yesterday + last-N-days
+   side by side). With many inverters the sidebar list can grow taller
+   than a single 420px chart; a shared flex row would then force the
+   yesterday/last-N-days row to wait for the sidebar to finish, leaving a
+   gap under the shorter chart. Grid columns don't share that constraint:
+   the chart stack flows independently of the sidebar's height. Both of
+   index.php's <table width="100%"> wrappers are "unwrapped" via
+   display:contents so their <td>s become direct grid items of one grid -
+   zero changes to index.php. */
+
+.page-index .meridiana-main {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  align-items: start;
+  gap: 1.25rem;
+  /* The charts are the main reason to be on this page: give them the
+     full viewport width instead of the 1400px cap used elsewhere, where
+     it helps readability of tables/forms more than it would help here. */
+  max-width: none;
+}
+
+.page-index .meridiana-main > table[width="100%"],
+.page-index .meridiana-main > table[width="100%"] > tbody,
+.page-index .meridiana-main > table[width="100%"] > tbody > tr {
+  display: contents;
+}
+
+.page-index .meridiana-main td[width="20%"] {
+  display: block;
+  /* index.php's own width="20%"/"80%"/"50%" HTML attributes still apply
+     as a low-priority presentational width - but inside a grid, a
+     percentage resolves against the GRID AREA, not the page, so
+     "20%" of a 300px column collapsed the sidebar (and gauge) to ~60px.
+     display:block alone doesn't cancel that; only an explicit width
+     does. Found by comparing against the meterN theme, where the
+     equivalent columns use flexbox with an explicit flex-basis, which
+     wins over the width attribute for a different reason and never hit
+     this bug. */
+  width: 100%;
+  grid-column: 1;
+  grid-row: 1 / span 3; /* spans today + yesterday + last-N-days */
+}
+
+.page-index .meridiana-main td[width="80%"],
+.page-index .meridiana-main td[width="50%"] {
+  display: block;
+  width: 100%;
+  grid-column: 2;
+  min-width: 0; /* let Highcharts shrink instead of overflowing */
+}
+
+/* ---------- Footer ---------- */
+
+.meridiana-footer {
+  border-top: 1px solid var(--border);
+  padding: 1.25rem;
+  margin-top: 1rem;
+}
+
+.meridiana-footer-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: .5rem;
+  color: var(--text-muted);
+  font-size: .8rem;
+}
+
+.meridiana-footer-inner a { color: var(--text-muted); }
+
+/* ---------- Legacy menu (m.php / links.php) and loading dots ---------- */
+
+.lds-ellipsis div { background: var(--primary) !important; }
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 860px) {
+  .meridiana-nav-toggle { display: inline-flex; order: 2; }
+  .meridiana-theme-toggle { order: 3; }
+
+  .meridiana-nav {
+    display: none;
+    order: 4;
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding-top: .5rem;
+    border-top: 1px solid var(--nav-border);
+    margin-top: .5rem;
+  }
+
+  .meridiana-nav.open { display: flex; }
+  .meridiana-nav a { padding: .7rem .5rem; border-radius: 6px; }
+
+  .meridiana-main { padding: 1rem .75rem 2rem; }
+
+  /* Single column: sidebar first (order:1), then the three charts in
+     their natural today/yesterday/last-N-days order. */
+  .page-index .meridiana-main {
+    grid-template-columns: 1fr;
+  }
+  .page-index .meridiana-main td[width="20%"] {
+    grid-column: 1;
+    grid-row: auto;
+    order: 1;
+  }
+  .page-index .meridiana-main td[width="80%"] {
+    grid-column: 1;
+    order: 2;
+  }
+  .page-index .meridiana-main td[width="50%"] {
+    grid-column: 1;
+    order: 3;
+  }
+
+  /* Raw data tables (detailed/production/comparison/info): horizontal
+     scroll instead of squeezing the columns. Excludes index.php's own
+     layout tables (chart/gauge scaffolding): those are already flattened
+     into grid items via display:contents above, a rule specific enough
+     to outrank this one regardless of media query. */
+  .meridiana-main table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+  }
+  .page-index .meridiana-main table[width="100%"] {
+    overflow-x: visible;
+    white-space: normal;
+  }
+}
+
+@media (max-width: 480px) {
+  .meridiana-brand-text small { display: none; }
+}
+
+/* dashboard.php (per-inverter drill-down) positions some elements with
+   fixed-pixel Highcharts renderer text/gauges: same known limitation as
+   the meterN dashboard - scrollable on narrow screens instead of broken,
+   full reflow is out of scope for a theme. */
+.page-dashboard .meridiana-main {
+  overflow-x: auto;
+}
