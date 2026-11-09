@@ -7,6 +7,7 @@
 
 
 include 'secure.php';
+include 'whitelistprotocols.php';
 include '../scripts/version.php';
 ?>
 <!DOCTYPE html>
@@ -67,12 +68,12 @@ if (!empty($_POST['SRx']) && is_string($_POST['SRx'])) {
 }
 
 if (!empty($_POST['PORTx']) && is_string($_POST['PORTx'])) {
-	$PORTx = htmlspecialchars($_POST['PORTx'], ENT_QUOTES, 'UTF-8');
+	$PORTx = escapeshellarg($_POST['PORTx'], ENT_QUOTES, 'UTF-8');
 } else {
 	$PORTx = '/dev/ttyUSB0';
 }
-if (!empty($_POST['PROTOCOLx']) && is_string($_POST['PROTOCOLx'])) {
-	$PROTOCOLx = htmlspecialchars($_POST['PROTOCOLx'], ENT_QUOTES, 'UTF-8');
+if (!empty($_POST['PROTOCOLx']) && is_string($_POST['PROTOCOLx']) && in_array($_POST['PROTOCOLx'], $whiteprotocols, true)) {
+	$PROTOCOLx = $_POST['PROTOCOLx'];
 } else {
 	$PROTOCOLx = 'aurora';
 }
@@ -82,7 +83,7 @@ if (!empty($_POST['ADRx']) && is_string($_POST['ADRx'])) {
 	$ADRx = 0;
 }
 if (!empty($_POST['COMOPTIONx']) && is_string($_POST['COMOPTIONx'])) {
-	$COMOPTIONx = htmlspecialchars($_POST['COMOPTIONx'], ENT_QUOTES, 'UTF-8');
+	$COMOPTIONx = escapeshellarg($_POST['COMOPTIONx'], ENT_QUOTES, 'UTF-8');
 } else {
 	$COMOPTIONx = '';
 }

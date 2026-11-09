@@ -20,6 +20,7 @@
 <tr><td>
 <?php
 include 'secure.php';
+include 'whitelistprotocols.php';
 date_default_timezone_set($DTZ);
 
 if (!empty($_POST['invtnum']) && is_numeric($_POST['invtnum'])) {
@@ -29,28 +30,28 @@ if (!empty($_POST['invtnum']) && is_numeric($_POST['invtnum'])) {
 }
 include "../config/config_invt$invtnum.php";
 
-if (!empty($_POST['PROTOCOLx']) && is_string($_POST['PROTOCOLx'])) {
-	$PROTOCOLx = htmlspecialchars($_POST['PROTOCOLx'], ENT_QUOTES, 'UTF-8');
+if (!empty($_POST['PROTOCOLx']) && is_string($_POST['PROTOCOLx']) && in_array($_POST['PROTOCOLx'], $whiteprotocols, true)) {
+	$PROTOCOLx = escapeshellcmd($_POST['PROTOCOLx'], ENT_QUOTES, 'UTF-8');
 } else {
 	$PROTOCOLx = ${'PROTOCOL'.$invtnum};
 }
 if (!empty($_POST['PHASEx']) && is_string($_POST['PHASEx'])) {
-	$PHASEx = htmlspecialchars($_POST['PHASEx'], ENT_QUOTES, 'UTF-8');
+	$PHASEx = escapeshellcmd($_POST['PHASEx'], ENT_QUOTES, 'UTF-8');
 } else {
 	$PHASEx = "${'PHASE'.$invtnum}";
 }
 if (!empty($_POST['PORTx']) && is_string($_POST['PORTx'])) {
-	$PORTx = htmlspecialchars($_POST['PORTx'], ENT_QUOTES, 'UTF-8');
+	$PORTx = escapeshellarg($_POST['PORTx'], ENT_QUOTES, 'UTF-8');
 } else {
 	$PORTx =  ${'PORT'.$invtnum};
 }
 if (!empty($_POST['COMOPTIONx']) && is_string($_POST['COMOPTIONx'])) {
-	$COMOPTIONx = htmlspecialchars($_POST['COMOPTIONx'], ENT_QUOTES, 'UTF-8');
+	$COMOPTIONx = escapeshellarg($_POST['COMOPTIONx'], ENT_QUOTES, 'UTF-8');
 } else {
 	$COMOPTIONx =  ${'COMOPTION'.$invtnum};
 }
 if (!empty($_POST['ADRx']) && is_string($_POST['ADRx'])) {
-	$ADRx = htmlspecialchars($_POST['ADRx'], ENT_QUOTES, 'UTF-8');
+	$ADRx = escapeshellcmd($_POST['ADRx'], ENT_QUOTES, 'UTF-8');
 } else {
 	$ADRx =  ${'ADR'.$invtnum};
 }
